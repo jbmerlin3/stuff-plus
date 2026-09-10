@@ -1,0 +1,5 @@
+data/
+*.rds
+*.ubj
+.Rhistory
+.Rproj.user/
