@@ -721,6 +721,37 @@ model) would be the one to rate Duran's splitter highly.
 
 ---
 
+## 2026-10-20: Eye test on the 2026 board
+
+**His verdict.** "This model is pretty solid. Passes my eye test for sure."
+
+**Axis differential, the definition to use.** The angle between the spin axis
+Hawk-Eye measures out of the hand and the axis implied by the ball's actual
+movement. If spin alone moved the ball they would match; a gap means something
+besides spin pushed it, usually seam-shifted wake. The hitter reads spin early
+and the ball goes somewhere else: deception, measured in degrees. Positive is
+extra movement toward the arm side; lefties mirrored.
+
+**Board floor.** The 250-pitch floor hid most pitch types (1,008 of 3,863
+shown): Max Meyer's CH (182) and SI (173), and every pitch of Justin Martinez
+(231 pitches in all of 2026). Board now shows 50+ with small samples marked,
+and a percentile within pitch type.
+
+**Four-seamers "lower in general."** Mostly the league-wide whiff scale he
+chose: four-seamers miss fewer bats than breaking balls. Cam Schlittler is a
+real miss: his FF grades 99 (73rd percentile among FF) but gets 35% whiffs per
+swing (98th). Sean Burke's 73rd vs 78th is about right. Extension checked and
+ruled out as the fix: across all four-seamers it explains nothing about whiffs
+beyond the grade (partial r 0.01). His exclusion holds.
+
+**Uniqueness (Tyler Rogers), a v3 idea.** Rogers's sinker gets 12% whiffs per
+swing against a 13% median: his uniqueness produces weak contact, which a value
+model rewards and a nastiness model should not. A "distance from any common
+shape" input is a fair v3 experiment; the model will use it only if rarity
+itself misses bats. 2026 is spent as an exam, so v3 is judged on 2027.
+
+---
+
 ## Open items
 
 - None from v1. The known-answer list was signed off 2026-10-19 and the old
