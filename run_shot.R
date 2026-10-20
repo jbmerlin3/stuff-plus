@@ -20,7 +20,8 @@ if (mode == "dry") {
   cat("pitches per fold:\n"); print(table(oof$fold))
   # Run every later step, report only that it ran
   steps <- list(gates = \() run_gates(oof), linear = \() run_cv(p, fit_linear, score_linear),
-                stab = \() split_half(oof), location = \() location_check(oof), by_type = \() by_type(oof))
+                stab = \() split_half(oof), location = \() location_check(oof), by_type = \() by_type(oof),
+                final = \() { f <- final_fit(p); explain_pitch(f$model, p, "Strider, Spencer", "FF", 2023) })
   for (s in names(steps)) cat(s, ":", tryCatch({ steps[[s]](); "ran" }, error = \(e) conditionMessage(e)), "\n")
   quit(save = "no")
 }
@@ -35,9 +36,11 @@ cat("gate 3 (within-type r):\n"); print(round(g$gate3, 4)); print(g$gate3_types)
 cat("gate 4 (known answers):\n"); print(g$gate4 |> select(player_name, pitch_type, game_year, list, pct, hit))
 
 # Reported, after the verdict is printed and saved
-g6  <- run_gates(run_cv(p, fit = \(d) fit_model(d, depth = 6)))
+# 8 GB machine: free each stage before the next
+gc()
+g6  <- run_gates(run_cv(p, fit = \(d) fit_model(d, depth = 6)));  gc()
 cat("\ndepth 6 verdicts (UNRESOLVED if any differ):\n"); print(g6$pass)
-lin <- run_gates(run_cv(p, fit_linear, score_linear))
+lin <- run_gates(run_cv(p, fit_linear, score_linear));             gc()
 cat("linear baseline, gate 1 and gate 3:\n"); print(round(rbind(gate1 = lin$gate1, gate3 = lin$gate3), 4))
 rep <- list(depth6 = g6, linear = lin, stab = split_half(oof),
             location = location_check(oof), by_type = by_type(oof), final = final_fit(p))
