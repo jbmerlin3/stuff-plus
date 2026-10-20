@@ -3,12 +3,21 @@
 suppressMessages({ source("R/cv.R"); source("R/gates.R"); source("R/validity.R"); source("R/leaderboards.R") })
 name <- commandArgs(trailingOnly = TRUE)[1]
 EXPERIMENTS <- list(
-  v1          = INPUTS,                          # baseline: the v1 inputs
-  ch_gaps     = c(INPUTS, "ivb_gap", "hb_gap")   # changeups judged against the fastball
+  v1          = INPUTS,                               # baseline: the v1 inputs
+  ch_gaps     = c(INPUTS, "ivb_gap", "hb_gap"),       # changeups vs the fastball (dropped)
+  spin_one    = c(INPUTS, "release_spin_rate"),       # 3a: one model + spin
+  spin_family = c(INPUTS, "release_spin_rate"),       # 3b: three family models + spin
+  whiff       = INPUTS                                # v2: whiff target, v1 inputs
 )
 inputs <- EXPERIMENTS[[name]]; stopifnot(!is.null(inputs))
 p   <- prep_pitches()
-oof <- run_cv(p, \(d) fit_model(d, inputs = inputs), \(m, d) score_both_sides(m, d, inputs))
+oof <- if (name == "whiff") {
+  run_cv(p, \(d) fit_whiff(d, inputs), \(m, d) score_both_sides(m, d, inputs))
+} else if (name == "spin_family") {
+  run_cv(p, \(d) fit_family(d, inputs), \(m, d) score_family(m, d, inputs))
+} else {
+  run_cv(p, \(d) fit_model(d, inputs = inputs), \(m, d) score_both_sides(m, d, inputs))
+}
 po  <- pitch_outcomes(oof)
 v   <- validity(po)
 fg  <- po |> filter(game_year == 2025) |>

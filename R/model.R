@@ -36,3 +36,38 @@ score_both_sides <- function(model, df, inputs = INPUTS) {
            pred_opp  = predict(model, xgb.DMatrix(to_matrix(opp, inputs))),
            pred      = (pred_same + pred_opp) / 2)
 }
+
+# Three family models (v2 experiment 3b). The Statcast label only ROUTES a
+# pitch to its family's model; inside each model it is still shape only. Each
+# family learns its own rules, e.g. low spin good for offspeed, high for FB
+FAMILY_OF <- function(pitch_type) case_when(
+  pitch_type %in% c("FF", "SI", "FC")             ~ "FB",
+  pitch_type %in% c("SL", "ST", "SV", "CU", "KC") ~ "BB",
+  TRUE                                            ~ "OS")
+
+fit_family <- function(train, inputs) {
+  split(train, FAMILY_OF(train$pitch_type)) |> map(\(d) fit_model(d, inputs = inputs))
+}
+
+score_family <- function(models, df, inputs) {
+  df |> mutate(.fam = FAMILY_OF(pitch_type)) |>
+    group_split(.fam) |>
+    map(\(d) score_both_sides(models[[d$.fam[1]]], d, inputs)) |>
+    list_rbind() |> select(-.fam)
+}
+
+# ---- v2: the whiff model ------------------------------------------------------
+# Trained on SWINGS only: given that the hitter swung, did this shape miss the
+# bat? Label 1 = whiff, 0 = contact. The output is a probability, so the
+# objective is logistic. Same inputs and settings as v1. Note min_child_weight
+# now counts p(1 - p) per pitch (~0.2), so 100 means roughly 500 swings a leaf
+SWING_DESC <- c("swinging_strike", "swinging_strike_blocked", "foul_tip", "foul", "hit_into_play")
+WHIFF_DESC_ <- c("swinging_strike", "swinging_strike_blocked", "foul_tip")
+
+fit_whiff <- function(train, inputs = INPUTS) {
+  set.seed(3)
+  sw <- train |> filter(description %in% SWING_DESC)
+  dtrain <- xgb.DMatrix(to_matrix(sw, inputs), label = as.integer(sw$description %in% WHIFF_DESC_))
+  xgb.train(params = modifyList(PARAMS, list(objective = "binary:logistic")),
+            data = dtrain, nrounds = N_ROUNDS, verbose = 0)
+}

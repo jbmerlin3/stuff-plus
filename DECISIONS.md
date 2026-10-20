@@ -595,6 +595,45 @@ spin on purpose while still requiring public-grade description.
 
 ---
 
+## 2026-10-20: v2 target becomes whiffs
+
+**Decision.** v2 is a whiff model: trained on swings only, label 1 = whiff,
+0 = contact. A grade is the average predicted whiff probability over all of a
+pitch's throws, scaled to 100. Run value on swings becomes the second
+yardstick.
+
+**How it came up.** Development results showed the target and the purpose did
+not match. The model was trained on run value (value) but judged on whiffs
+(nastiness). On 2025, against FanGraphs on the same pitches: whiff per swing
+0.234 vs 0.512, but run value on swings 0.185 vs 0.263. The gap was mostly
+about what the model aimed at, not any input, which is why no added input
+moved it.
+
+**Options considered.** Whiff per swing; keep run value and rename the purpose
+"pitch value"; build both.
+
+**Why, in his words.** "Whiffs don't make a pitch the best," then, "but from a
+nastiness perspective they do." And: "Make it a whiff model." It also matches
+his first instinct in v1: "Just let sinkers and prob CH too grade low and state
+that, since we're chasing whiffs."
+
+**Cost.** The grade no longer rewards weak contact: sinkerballers grade low on
+nastiness. That is accurate for the word, not a measure of a pitch's value.
+
+**Keep both, his call.** "Keep both versions and see which is better." Rule
+set while the whiff run was still in progress, before any of its results:
+the version with the higher within-type whiff-per-swing r on 2022-2025 wins
+(the purpose is nastiness); run value on swings is reported as a second check.
+Only the winner takes the 2026 exam; picking between them on 2026 would be
+selecting on the exam. The other version stays in the code and log, available
+later as a separate "pitch value" grade.
+
+**Correction recorded.** Claude earlier called checking a whiff-trained model
+against whiffs "circular." That is wrong for out-of-fold grades: the model never
+saw those pitchers, so it is the normal accuracy test.
+
+---
+
 ## Open items
 
 - None from v1. The known-answer list was signed off 2026-10-19 and the old
