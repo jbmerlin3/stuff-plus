@@ -1,13 +1,14 @@
 library(tidyverse)
 
 # ---- Constants ---------------------------------------------------------------
-TRAIN_YEARS <- 2022:2024
-TEST_YEAR   <- 2025
+# Validation holds out pitchers, not a season (PREREG.md section 6), so all four
+# complete seasons are cleaned together. 2026 stays out until v1 is judged
+SEASONS <- 2022:2025
 
 KEEP_COLS <- c(
   "pitcher", "player_name", "game_year", "game_date",
   "game_pk", "at_bat_number", "pitch_number", "p_throws", "stand",
-  "description", "balls", "strikes",
+  "description", "events", "balls", "strikes", "delta_run_exp",
   "pitch_type", "release_speed", "release_spin_rate", "release_extension",
   "release_pos_x", "release_pos_z", "pfx_x", "pfx_z", "arm_angle", "spin_axis",
   "vx0", "vy0", "vz0", "ax", "ay", "az", "plate_z"
@@ -17,12 +18,14 @@ KEEP_COLS <- c(
 DROP_DESC <- c("automatic_ball", "automatic_strike", "pitchout",
                "foul_bunt", "missed_bunt", "bunt_foul_tip")
 
-VALID_TYPES <- c("FF", "SI", "FC", "SL", "ST", "CU", "KC", "CH", "FS", "SV")
+# FO added 2026-10-19: Senga's ghost fork is tagged FO, and leaving it out
+# silently dropped every forkball
+VALID_TYPES <- c("FF", "SI", "FC", "SL", "ST", "CU", "KC", "CH", "FS", "SV", "FO")
 
 # Only the columns the model will use. A row missing spin_axis shouldn't be
 # dropped if spin_axis never becomes a feature
-MODEL_INPUTS <- c("release_speed", "release_spin_rate",
-                  "release_pos_x", "release_pos_z", "pfx_x", "pfx_z")
+# Spin is not an input (DECISIONS.md), so a pitch missing spin is kept
+MODEL_INPUTS <- c("release_speed", "release_pos_x", "release_pos_z", "pfx_x", "pfx_z")
 
 # Real soft-tossers who fall under the 80 mph screen, checked by hand Sept 2026.
 # Revisit whenever a season is added
@@ -49,7 +52,7 @@ log_step <- function(df, label) {
 load_pitches <- function(path) {
   readRDS(path) |>
     select(all_of(KEEP_COLS)) |>
-    filter(game_year %in% c(TRAIN_YEARS, TEST_YEAR)) |>
+    filter(game_year %in% SEASONS) |>
     # Integer IDs so joins to FanGraphs xMLBAMID work later
     mutate(pitcher = as.integer(pitcher))
 }
@@ -77,7 +80,10 @@ clean_pitches <- function(df, flagged) {
     filter(pitch_type %in% VALID_TYPES) |>
     log_step("after pitch type filter") |>
     drop_na(all_of(MODEL_INPUTS)) |>
-    log_step("after missing features")
+    log_step("after missing features") |>
+    # No run value means no target; a 4-ball or 3-strike count is a data error
+    filter(!is.na(delta_run_exp), balls < 4, strikes < 3) |>
+    log_step("after target and count checks")
 }
 
 # One row per pitch, or the script stops

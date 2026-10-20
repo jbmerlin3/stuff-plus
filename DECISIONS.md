@@ -405,6 +405,24 @@ forking path.
 
 ---
 
+## 2026-10-19: Keep the cleaning filters (pre-registration amendment 1)
+
+**Decision.** Keep the two filters already in `02_clean.R` (position players
+pitching; bunts, pitchouts, automatic balls and strikes) and add them to the
+pre-registration as a dated amendment. `02_clean.R` was edited to match the
+pre-registration: 2022-2025 together, FO kept, target columns kept, spin not
+required.
+
+**How it came up.** The first input audit read `02_clean.R` before writing new
+code and found four mismatches with PREREG.md and two good filters PREREG.md
+had missed.
+
+**Why amending is fair here.** No model was fit and no outcome was seen. An
+amendment before the shot is housekeeping; the same change after seeing grades
+would be a forking path.
+
+---
+
 ## Accepted, not discussed (revisit in the loop)
 
 - **Known-answer list.** Draft of 15 elite and 4 weak pitches, waiting on his

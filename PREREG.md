@@ -227,3 +227,27 @@ gate 3 pools the types and allows one miss.
 - Production fit on 2022 to 2026 for the app.
 - Coors and other park effects on movement: a known bias, not sized here.
 - Location+, Pitching+, contact-quality models.
+
+## Amendment 1, 2026-10-19 (before fitting)
+
+The input audit found that `02_clean.R` and this document disagreed. Nothing
+had been fit and no outcome had been looked at, so this is a documented
+amendment, not a change made after seeing results.
+
+**Two filters from `02_clean.R` are added to section 1:**
+- Position players pitching are removed: pitcher-seasons more than half FA/EP,
+  or averaging under 80 mph, except eight soft-tossers checked by hand
+  (245 pitcher-seasons flagged, listed in `outputs/position_players_excluded.csv`).
+- Bunts, pitchouts and automatic balls and strikes are removed. They are not
+  stuff outcomes.
+
+**`02_clean.R` was brought in line with this document:** all of 2022 to 2025
+cleaned together (not train 2022-24, test 2025), FO kept, `delta_run_exp` and
+`events` kept for the target, spin no longer required.
+
+**Counts change:**
+- Pitches: 2,827,868 (was 2,834,000), of which 1,663 FO.
+- Year pairs: 3,484 (was 3,486): 1,156, 1,155, 1,173.
+- Gate 3 pairs: FF 990, SL 558, SI 551, CH 417, CU 257, ST 244.
+
+Nothing else changes.
