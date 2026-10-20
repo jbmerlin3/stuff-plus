@@ -33,7 +33,7 @@ count. Balls in play take the actual result. No xwOBA substitution.
   strikes.
 - Raw `delta_run_exp`: simplest, but grades the base-out situation, which the
   pitch does not control.
-- Count-and-outcome average (tjStuff+ style xRV): removes base-out state, keeps
+- Count-and-outcome average (often called xRV): removes base-out state, keeps
   ball-in-play luck.
 - What teams do: separate models for swing, whiff, contact, and contact
   quality, combined into runs (BP StuffPro). Too many models for this build.
@@ -51,10 +51,10 @@ version as the one-model version of what a team does.
 **Decision.** Velo, IVB, HB, release height, release side. Breaking and
 offspeed models also get the velo gap to the pitcher's primary fastball.
 
-**Options considered.** Public models (FanGraphs, BP StuffPro, tjStuff+,
-Baseball America, FG Community xWhiff) all use velo, movement and release
-point; most add extension and spin; FG, BP and tjStuff+ add velo and movement
-gaps, BA uses velo gap only.
+**Options considered.** Public models (FanGraphs, BP StuffPro, Baseball
+America, FG Community xWhiff) all use velo, movement and release point; most
+add extension and spin; FG and BP add velo and movement gaps, BA uses velo gap
+only.
 
 **Why, in his words.**
 - "Take out extension."
@@ -107,7 +107,7 @@ model "fastball" without a label.
 
 **Options considered.**
 - One model, no type: simplest, one set of settings, every pitch judged on
-  shape (tjStuff+ style).
+  shape.
 - Three family models: each family learns its own physics (BP StuffPro, FG
   Community xWhiff), but three sets of settings, every feature decision made
   three times, and judgment calls on where FC and KC belong.
@@ -153,8 +153,8 @@ predictions are the vs RHH and vs LHH grades; the overall grade averages them
 **Options considered.**
 - Add batter side: split grades that fit the app's Batter side selector, at
   the cost of one feature and half the sample behind each split.
-- One grade only: simplest, as FanGraphs and tjStuff+ do. BP StuffPro includes
-  batter side.
+- One grade only: simplest, as FanGraphs does. BP StuffPro includes batter
+  side.
 
 **Why.** He raised it: "I know some stuff models are able to split and give one
 grade vs righties and a different grade vs lefties." A sweeper's value depends
@@ -330,7 +330,7 @@ Statcast labels and pitch counts before fitting (no grades seen), and he signs
 off on the names.
 
 **Options considered.** Hard gate; eye test only (stop and investigate if under
-half hit); minimum rank agreement with FanGraphs and tjStuff+ (objective, but
+half hit); minimum rank agreement with public Stuff+ models (objective, but
 the designs differ on purpose, so any threshold is arbitrary).
 
 **Why.** Took both recommendations. Gate 4 is the only check that catches a
