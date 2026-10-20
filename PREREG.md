@@ -251,3 +251,22 @@ cleaned together (not train 2022-24, test 2025), FO kept, `delta_run_exp` and
 - Gate 3 pairs: FF 990, SL 558, SI 551, CH 417, CU 257, ST 244.
 
 Nothing else changes.
+
+## Amendment 2, 2026-10-19 (before fitting)
+
+**Primary fastball rule, section 3.** Was: the pitcher's most-thrown of FF, SI,
+FC. Now: the **hardest** FF, SI or FC he throws at least 10% of the time and
+20+ times that season; if none qualifies, his most-thrown fastball.
+
+**Why.** The input audit (no grades or outcomes seen) found cutter-first
+pitchers measured against the cutter. Brazobán's changeup read 1.2 to 2.0 mph
+*faster* than his baseline, and Sixto Sánchez's baseline was an 83.6 mph
+cutter. Hitters time to the hardest fastball they might see, so the velo gap is
+measured from it. The usage floors stop a rare show-me fastball or a tiny
+sample from setting the baseline.
+
+**Result of the re-audit.** No offspeed or breaking pitch sits above its
+baseline. 144 of 3,217 pitcher-seasons use the fallback.
+
+**Also fixed in the audit, no plan change:** mirroring flipped the wrong hand.
+The plan always said arm side positive; the code now does it.

@@ -423,6 +423,33 @@ would be a forking path.
 
 ---
 
+## 2026-10-19: Velo gap measured from the hardest fastball (amendment 2)
+
+**Decision.** Baseline = the hardest FF, SI or FC thrown at least 10% of the
+time and 20+ times that season; otherwise the most-thrown fastball.
+
+**How it came up.** The baseline audit: Brazobán throws mostly 88 mph cutters
+and a 96 to 97 sinker and four-seamer. Measured from the cutter, his changeup
+looked faster than his fastball.
+
+**Options considered.** Most-thrown (the old rule); hardest with 10% usage and
+20 pitches; hardest with 10% only; hardest at any usage.
+
+**Why, in his words.** "Use the velo difference from 96." Hitters gear up for
+the hardest heater. The floors came from his point that a baseline from a few
+fastballs is "a small sample": one bad baseline shifts every secondary pitch's
+gap.
+
+**Other audit answers, in his words.**
+- Cease's 75 mph 2023 changeup: "Cease did throw a 75 mph CH in 2023, but he
+  threw it only 3%." The label stays.
+- Slow curves 20+ mph off the fastball: "probably would really like these
+  pitches bc of the big velo gap. However, I know velocity is king." Lesson:
+  the model learns which wins from outcomes, and trees predict flat at the
+  edges, so rare shapes are graded like their nearest common neighbors.
+
+---
+
 ## Accepted, not discussed (revisit in the loop)
 
 - **Known-answer list.** Draft of 15 elite and 4 weak pitches, waiting on his
