@@ -576,6 +576,25 @@ held-out season."
 
 ---
 
+## 2026-10-20: Council on v2; FanGraphs bar
+
+**Council refinements, adopted.**
+- Main validity test: within each pitch type, same-season correlation of
+  Stuff+ with **whiff per swing** (the most shape-driven outcome), pooled across
+  types. Run value on swings reported beside it.
+- The 2026 holdout is same-season, so no year pairs are needed (~950 qualified
+  pitch types), cleaned through the same `02_clean.R`.
+- Reliability is a sanity check, not a bar.
+- Every development experiment is logged one line each in `ITERATIONS.md`.
+- FanGraphs' 2026 export ends 2026-08-17: compare over that window or pull a
+  full-season export.
+
+**His call.** On 2026, v2's pooled within-type correlation with whiff per swing
+may trail FanGraphs' by **at most 0.05**. Allows for leaving out extension and
+spin on purpose while still requiring public-grade description.
+
+---
+
 ## Open items
 
 - None from v1. The known-answer list was signed off 2026-10-19 and the old
