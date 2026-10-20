@@ -504,6 +504,32 @@ overall grade is about the pitch."
 
 ---
 
+## 2026-10-20: Council review before the shot (amendment 5)
+
+**What happened.** Five advisors (contrarian, first principles, expansionist,
+outsider, executor) reviewed the plan and code, then reviewed each other
+blind, and a chairman ruled.
+
+**Verdict.** Design sound, no leak or broken gate found; not ready to run
+until the plumbing exists: no run script, no code for the reported checks,
+and `renv.lock` recorded no packages.
+
+**His calls.** Linear baseline stays reported, not gated. Location check added
+as a reported item.
+
+**Points worth keeping for interviews.**
+- Gate 1 is the easy gate; gates 3 and 4 carry the weight.
+- Location leaks into the target (balls, called strikes, walks); every stuff
+  model shares it, and this one now measures it.
+- The known-answer list is partly circular: reputations are partly results.
+- The 50/50 grade describes a pitch, not a pitcher's projected results.
+
+**v2 list (not before the shot).** Pitch-design what-ifs, Triple-A prospect
+grades, a trust indicator in the app from the stabilization curve, a public
+writeup built from this log.
+
+---
+
 ## Accepted, not discussed (revisit in the loop)
 
 - **Known-answer list.** Draft of 15 elite and 4 weak pitches, waiting on his

@@ -305,3 +305,19 @@ grades. This is standard practice for stuff models.
 written up as a checklist, then a dry run that reports structure only (row
 counts, missing values, input ranges, every step running) with no
 predictions, correlations or grades printed.
+
+## Amendment 5, 2026-10-20 (before fitting)
+
+After a council review of the plan (DECISIONS.md, 2026-10-20):
+
+- **Location check, reported, not gated.** Per pitch type, the correlation
+  between a pitcher-season's grade and its zone rate (share of pitches in
+  Statcast zones 1 to 9). It sizes how much location the target lets leak into
+  "shape." `zone` is kept by `02_clean.R` for this only; it is never an input.
+- **Linear baseline stays reported, not gated** (section 10 item 1), as written.
+- **Three statements go in the writeup:** the model answers "how much run value
+  does this shape produce against an average hitter, ignoring location"; the
+  50/50 overall grade describes the pitch and is not a projection of a
+  pitcher's results; dropping extension is a bet, not a finding.
+- **Reproducibility:** package versions are recorded in `renv.lock` before the
+  shot.

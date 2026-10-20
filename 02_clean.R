@@ -11,7 +11,8 @@ KEEP_COLS <- c(
   "description", "events", "balls", "strikes", "delta_run_exp",
   "pitch_type", "release_speed", "release_spin_rate", "release_extension",
   "release_pos_x", "release_pos_z", "pfx_x", "pfx_z", "arm_angle", "spin_axis",
-  "vx0", "vy0", "vz0", "ax", "ay", "az", "plate_z"
+  "vx0", "vy0", "vz0", "ax", "ay", "az", "plate_z",
+  "zone"   # for the reported location check (amendment 5), never a model input
 )
 
 # Not real pitch outcomes (clock violations, pitchouts) or not stuff outcomes (bunts)
