@@ -770,6 +770,25 @@ the model." A nastiness grade does not reward weak contact or rarity.
 
 ---
 
+## 2026-10-20: App shows Stuff+ at every sample size
+
+**Decision.** No minimum pitch count for showing Stuff+ in the app; the count
+sits beside every grade, as with every other column.
+
+**Options considered.** Leave it; hide Stuff+ under 10 pitches in the chosen
+window.
+
+**Why, in his words.** "I think we have to leave it." Consistent with the
+app's other columns. Known cost: a 1-pitch grade (Martinez's slider vs LHH in
+local testing) can look more authoritative than it is.
+
+**His local test results.** Sweeper better vs same-side hitters (Cade Smith ST
+116 vs RHH, 109 vs LHH), curve neutral (Schlittler CU 120/121/120), cutter
+glove-side split (Schlittler FC 104 vs RHH, 96 vs LHH), splitters steady (Smith
+124 every view). Grade follows dates and batter side.
+
+---
+
 ## Open items
 
 - None from v1. The known-answer list was signed off 2026-10-19 and the old
