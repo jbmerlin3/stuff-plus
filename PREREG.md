@@ -270,3 +270,19 @@ baseline. 144 of 3,217 pitcher-seasons use the fallback.
 
 **Also fixed in the audit, no plan change:** mirroring flipped the wrong hand.
 The plan always said arm side positive; the code now does it.
+
+## Amendment 3, 2026-10-19 (before fitting)
+
+**Outcome mapping, section 2,** made explicit while writing `R/target.R`:
+- Reached on error counts as a **field out**: the pitch induced contact a
+  fielder should have turned into an out, and the target is meant to remove
+  defense.
+- **Sacrifice bunts dropped**, matching the bunt filter in section 1. Bunt hits
+  cannot be identified without bunt tags and stay in, a small known leftover.
+- Foul tips count as whiffs (Savant's definition). Catcher's interference and
+  truncated plate appearances are dropped. Strikeout double plays are
+  strikeouts.
+
+99.88% of cleaned pitches map to an outcome. Leak tests
+(`tests/test_leaks.R`) pass: every pitcher in one fold, no fold's table built
+from its own pitchers, every held-out pitch valued.

@@ -450,6 +450,26 @@ gap.
 
 ---
 
+## 2026-10-19: Errors count as outs, sac bunts dropped (amendment 3)
+
+**Decision.** A reached-on-error ball in play gets field-out value. Sacrifice
+bunts are dropped.
+
+**Options considered.** Errors: count as outs; drop (v5); keep as reached base.
+Sac bunts: drop; keep as outs.
+
+**Why.** Took both recommendations. Counting errors as outs keeps the contact
+the pitch induced while removing the fielder, which is the target's job;
+dropping them would throw that contact away, and keeping them as hits charges
+the pitcher for his defense. A sac bunt is the hitter choosing to make an out,
+consistent with his bunt filter.
+
+**Leak test result.** Without each fold's pitchers, the run-value table moves
+by up to 0.014 to 0.039 runs in its thinnest cells. Small overall, real in
+thin cells, which is why it is built per fold.
+
+---
+
 ## Accepted, not discussed (revisit in the loop)
 
 - **Known-answer list.** Draft of 15 elite and 4 weak pitches, waiting on his
