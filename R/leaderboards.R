@@ -34,7 +34,7 @@ add_fangraphs <- function(board, fg_path) {
   board |>
     mutate(fg_type = if_else(pitch_type == "ST", "SL", pitch_type)) |>
     left_join(fg, by = c("pitcher", "fg_type")) |>
-    mutate(fg_stuff = round(fg_stuff),
-           our_rank = min_rank(-stuff_plus), fg_rank = min_rank(-fg_stuff),
+    mutate(fg_rank  = min_rank(-fg_stuff),
+           our_rank = if ("stuff_plus" %in% names(board)) min_rank(-stuff_plus) else NA_integer_,
            .by = pitch_type)
 }

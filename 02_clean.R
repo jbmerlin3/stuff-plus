@@ -38,7 +38,8 @@ REAL_PITCHERS <- c(
   689690L,  # Jacob, Alek
   592222L,  # Claudio, Alex
   491624L,  # Valdez, César
-  572383L   # Moran, Brian
+  572383L,  # Moran, Brian
+  676680L   # Cosgrove, Tom: sweeper-heavy LHP, 78.5 mph average in 2026 (added 2026-10-20)
 )
 
 # ---- Functions ---------------------------------------------------------------
@@ -95,15 +96,23 @@ check_unique <- function(df) {
 }
 
 # ---- Run ---------------------------------------------------------------------
-all_pitches <- load_pitches("data/pitches_all_master.rds")
+# Rscript 02_clean.R                       -> 2022-2025 development data
+# Rscript 02_clean.R <in> <out> <season>   -> a holdout season, same filters
+args <- commandArgs(trailingOnly = TRUE)
+in_path  <- if (length(args) >= 1) args[1] else "data/pitches_all_master.rds"
+out_path <- if (length(args) >= 2) args[2] else "data/pitches_clean.rds"
+if (length(args) >= 3) SEASONS <- as.integer(args[3])
+flag_path <- sub("\\.rds$", "_position_players.csv", sub("^data/", "outputs/", out_path))
+
+all_pitches <- load_pitches(in_path)
 gc()
 stopifnot(!anyNA(all_pitches$pitcher))
 
 flagged <- flag_position_players(all_pitches)
 message("Flagged pitcher-seasons: ", nrow(flagged))
-write_csv(flagged, "outputs/position_players_excluded.csv")
+write_csv(flagged, if (length(args)) flag_path else "outputs/position_players_excluded.csv")
 
 pitches_clean <- clean_pitches(all_pitches, flagged)
 check_unique(pitches_clean)
 
-saveRDS(pitches_clean, "data/pitches_clean.rds")
+saveRDS(pitches_clean, out_path)
