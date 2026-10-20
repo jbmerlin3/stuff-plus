@@ -544,10 +544,39 @@ rule.
 
 ---
 
-## Accepted, not discussed (revisit in the loop)
+## 2026-10-20: v1 result, and v2 purpose and rules
 
-- **Known-answer list.** Draft of 15 elite and 4 weak pitches, waiting on his
-  edits.
+**v1 verdict: FAIL** (gates 1 and 2 failed, 3 and 4 passed, depth 6
+RESOLVED). Lost to raw results on changeups, splitters and sinkers. Recorded
+as is; not rerun to pass.
 
-Draft pre-registration with all of the above: `~/Desktop/Baseball
-Questionnaires/02_StuffPlus/PREREG_SimpleStuff.md` (uncommitted).
+**Purpose, in his words.** "Stuff+ is meant to measure how nasty a pitch is in
+a hitter, situation, and location agnostic way." And: "I don't need the most
+predictive stat in the world... I want this to be a descriptive metric."
+Clarified: it describes the expected value of the shape, not how the pitch
+performed (that would include location, which the pitcher controls:
+Pitching+).
+
+**Extension is out, final.** His override: "Extension will not be in the
+model."
+
+**v2 rules (Claude as team R&D analyst, he vetoes).**
+- Data roles: iterate on 2022-2025 with pitcher folds; 2026 is the one
+  untouched final test.
+- Bars follow the purpose: reliability (split-half, year to year), validity
+  (within-type same-season whiff rate and run value on swings, benchmarked
+  against FanGraphs Stuff+ on the same pitches), face validity (known answers).
+  The predictive test is reported, not a bar.
+- First change to try: IVB and HB gaps to the hardest fastball.
+- Pitcher roll-up: usage-weighted, descriptive only; no K-BB% projection test.
+
+**Interview line.** "v1 taught me I'd judged a descriptive metric with a
+predictive bar. I re-derived the bars from the purpose and tested on a
+held-out season."
+
+---
+
+## Open items
+
+- None from v1. The known-answer list was signed off 2026-10-19 and the old
+  02_StuffPlus draft was deleted.
