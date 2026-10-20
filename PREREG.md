@@ -286,3 +286,18 @@ The plan always said arm side positive; the code now does it.
 99.88% of cleaned pitches map to an outcome. Leak tests
 (`tests/test_leaks.R`) pass: every pitcher in one fold, no fold's table built
 from its own pitchers, every held-out pitch valued.
+
+## Amendment 4, 2026-10-19 (before fitting)
+
+**Gates run on raw out-of-fold predictions; the 100 scale is display only.**
+Section 6 said μ and σ are fit inside each training fold. That needs
+predictions on training pitchers, which are overconfident, and five per-fold
+scales would blur pooled ranks. Gates 1 to 3 are correlations and gate 4 is
+percentile ranks, so none needs the scale. The scale constants in section 5
+come from the final fit on 2022 to 2025 and are applied only to displayed
+grades. This is standard practice for stuff models.
+
+**Before the shot:** a line-by-line review of this document against the code,
+written up as a checklist, then a dry run that reports structure only (row
+counts, missing values, input ranges, every step running) with no
+predictions, correlations or grades printed.

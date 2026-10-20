@@ -470,6 +470,22 @@ thin cells, which is why it is built per fold.
 
 ---
 
+## 2026-10-19: Gates on raw predictions; pre-shot review (amendment 4)
+
+**Decision.** Gates use raw out-of-fold predictions; the 100 scale is applied
+only for display, with constants from the final fit.
+
+**Why, in his words.** "Every stuff model does this, it's common practice."
+
+**His concern, recorded.** "One thing I don't like is how you keep finding
+little mistakes. If we only have one shot at this, we can't have little
+mistakes." Response: three of the four were gaps in Claude's own draft of the
+pre-registration and one was Claude's code; all were caught before any grade
+was seen. To stop relying on catching them, the shot now waits for a
+line-by-line plan-versus-code review and a structure-only dry run.
+
+---
+
 ## Accepted, not discussed (revisit in the loop)
 
 - **Known-answer list.** Draft of 15 elite and 4 weak pitches, waiting on his
