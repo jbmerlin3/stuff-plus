@@ -699,6 +699,28 @@ grade correctly ignores. Sweepers remain the weakest type.
 
 ---
 
+## 2026-10-20: Two follow-ups to the exam
+
+**"Did it just learn pitchers?" No.** 2026 whiff r: returning pitchers 0.522,
+pitchers new in 2026 0.441 (57 pitch types). Recognition adds some, but the
+never-seen group is still well above the bar, and development's 0.465 came
+from a model that saw none of the pitchers it graded.
+
+**Hard splitters: not a blind spot, a definition.** He: "Hard splitters should
+grade well." Duran's splitter ranks near the bottom in whiff per swing every
+season (2023 27%, 19th of 23; 2024 21%, 32nd of 34; 2025 23%, 30th of 33; 2026
+28%). The model's low grade matches. Its value is getting swings and weak
+contact at 97 mph, which a nastiness (whiff) grade correctly ignores. Cade
+Smith (39 to 45% whiffs) grades 124, correctly. Yamamoto (42% in 2025, 34% in
+2026, grade 107) may be slightly underrated.
+
+**Lesson.** Duran was a poor known-answer pick for a whiff metric: chosen from
+reputation without checking what the reputation was about. When a metric and a
+scout disagree, check what each measures first. A value grade (the run-value
+model) would be the one to rate Duran's splitter highly.
+
+---
+
 ## Open items
 
 - None from v1. The known-answer list was signed off 2026-10-19 and the old
