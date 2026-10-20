@@ -674,6 +674,31 @@ for both hands, sinkers and changeups larger, sign flipping by hand.
 
 ---
 
+## 2026-10-20: v2 exam result: PASS
+
+**Verdict.** 2026 pooled within-type whiff r **0.518** against the 0.38 bar
+(development, out of fold: 0.465). Exam run at commit 4af1edd, log in
+`outputs/exam_v2_exam/exam.log`.
+
+**Reported.** Run value on swings 0.281. Against FanGraphs on the same 767
+pitches over its export window (to 2026-08-17): ours 0.497, FanGraphs 0.483.
+Split-half reliability 0.99 at 25 pitches (expected for a shape model: proves
+stability, not correctness). Face validity on 2022-2025: 10 of 15 elite, 4 of 4
+weak. By type: SI 0.65, FC 0.64, SL 0.60, FF 0.53, CH 0.51, FS 0.48, CU 0.42,
+ST 0.33.
+
+**Predictions.** He predicted lower than development; so did Claude. It came
+in higher. Likely reasons: the final model trained on all four seasons, and
+most 2026 pitchers appear in 2022-2025 training, so 0.518 is a "veteran" grade.
+The strict call-up figure is development's 0.465.
+
+**Findings to keep.** Hard splitters are a blind spot: Duran's 97 mph splitter
+(3 mph off his fastball) ranks 0th percentile among splitters, read as
+fastball-like. Clase's cutter (19th) wins on weak contact, which a nastiness
+grade correctly ignores. Sweepers remain the weakest type.
+
+---
+
 ## Open items
 
 - None from v1. The known-answer list was signed off 2026-10-19 and the old
