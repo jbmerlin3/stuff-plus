@@ -634,6 +634,30 @@ saw those pitchers, so it is the normal accuracy test.
 
 ---
 
+## 2026-10-20: The 2026 exam bar
+
+**Decision.** v2 passes the 2026 exam if its pooled within-type correlation
+with whiff per swing is **at least 0.38**. Development (2022-2025, out of fold)
+is 0.42; 0.38 allows normal season-to-season wobble but not collapse. FanGraphs
+is reported beside it, not a bar. Replaces the earlier "within 0.05 of
+FanGraphs," which the benchmark check showed no comparable design would pass.
+Set before any 2026 result exists.
+
+**His answers on the way here, in his words.**
+- On judging both versions on whiffs: "Comparing apples to apples. It doesn't
+  make sense to judge on whiffs if the target is RV." Refinement: each model is
+  judged on its own target to ask whether it works; the choice between them is
+  judged on the purpose (nastiness). The whiff model also tied on run value on
+  swings, 0.216 vs 0.213.
+- On the holdout: "Could we make a copy?" No: a holdout is information, not a
+  file. Once a result is seen and acted on, every copy is spent.
+- On k-means slider groups (from his sweep velocity project): clusters built
+  from the same inputs add little the trees cannot find; v5's cluster variable
+  was inert. Possible use as a cleaner grouping for judging sweepers, reported
+  only.
+
+---
+
 ## Open items
 
 - None from v1. The known-answer list was signed off 2026-10-19 and the old
