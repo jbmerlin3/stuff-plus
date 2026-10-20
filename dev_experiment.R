@@ -7,11 +7,12 @@ EXPERIMENTS <- list(
   ch_gaps     = c(INPUTS, "ivb_gap", "hb_gap"),       # changeups vs the fastball (dropped)
   spin_one    = c(INPUTS, "release_spin_rate"),       # 3a: one model + spin
   spin_family = c(INPUTS, "release_spin_rate"),       # 3b: three family models + spin
-  whiff       = INPUTS                                # v2: whiff target, v1 inputs
+  whiff       = INPUTS,                               # v2: whiff target, v1 inputs
+  whiff_axis  = c(INPUTS, "axis_diff")                # v2 exp 4: + axis differential
 )
 inputs <- EXPERIMENTS[[name]]; stopifnot(!is.null(inputs))
 p   <- prep_pitches()
-oof <- if (name == "whiff") {
+oof <- if (name %in% c("whiff", "whiff_axis")) {
   run_cv(p, \(d) fit_whiff(d, inputs), \(m, d) score_both_sides(m, d, inputs))
 } else if (name == "spin_family") {
   run_cv(p, \(d) fit_family(d, inputs), \(m, d) score_family(m, d, inputs))

@@ -54,3 +54,17 @@ add_velo_gap <- function(df) {
            ivb_gap  = ivb - fb_ivb,
            hb_gap   = hb - fb_hb)
 }
+
+# Axis differential (v2 experiment 4): the gap between the spin axis Hawk-Eye
+# measures and the axis implied by the ball's actual movement. A gap means
+# something besides spin moved the ball (seam-shifted wake): the pitch breaks
+# differently than its spin tells the hitter. Calibrated 2026-10-20: curveballs
+# sit near 0 for both hands; sinkers, changeups and splitters run larger; the
+# sign flips by hand, so lefties are mirrored
+add_axis_diff <- function(df) {
+  df |>
+    mutate(move_axis = (180 + atan2(-pfx_x, pfx_z) * 180 / pi) %% 360,
+           axis_diff = ((move_axis - spin_axis + 540) %% 360) - 180,
+           axis_diff = if_else(lhp, -axis_diff, axis_diff)) |>
+    select(-move_axis)
+}

@@ -658,6 +658,22 @@ Set before any 2026 result exists.
 
 ---
 
+## 2026-10-20: Axis differential kept; v2 frozen
+
+**Result.** Adding the axis differential to the whiff model raised dev whiff r
+from 0.423 to 0.465, clearing his +0.02 rule. Gap to FanGraphs on 2025: 0.06,
+down from 0.28 at the start of v2. Sweepers barely moved (0.23 to 0.24): still
+an open question for v3.
+
+**How it is built, as taught.** Measured spin axis (Hawk-Eye) against the axis
+implied by the actual movement; the gap is movement spin does not explain
+(seam-shifted wake), i.e. deception. Calibrated before use: curveballs near 0
+for both hands, sinkers and changeups larger, sign flipping by hand.
+
+**Frozen.** No more experiments before the exam. Spec: PREREG_v2.md.
+
+---
+
 ## Open items
 
 - None from v1. The known-answer list was signed off 2026-10-19 and the old

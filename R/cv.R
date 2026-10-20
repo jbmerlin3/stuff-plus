@@ -4,7 +4,7 @@ source("R/target.R")
 source("R/model.R")
 
 KEEP <- c("pitcher", "player_name", "game_year", "pitch_type", "p_throws", "stand",
-          "balls", "strikes", "outcome", "fold", "zone", "description", INPUTS, "ivb_gap", "hb_gap")
+          "balls", "strikes", "outcome", "fold", "zone", "description", INPUTS, "ivb_gap", "hb_gap", "release_spin_rate", "axis_diff")
 
 # Clean pitches to model-ready rows. Every step is pitch-level or uses the
 # pitcher's own season, so nothing here needs a fold
@@ -12,6 +12,7 @@ prep_pitches <- function(path = "data/pitches_clean.rds") {
   p <- readRDS(path) |>
     add_shape() |>
     add_velo_gap() |>
+    add_axis_diff() |>
     mutate(outcome = outcome(events, description)) |>
     filter(!is.na(outcome))
   p |> left_join(assign_folds(p), by = "pitcher") |>
