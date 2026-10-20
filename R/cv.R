@@ -4,7 +4,7 @@ source("R/target.R")
 source("R/model.R")
 
 KEEP <- c("pitcher", "player_name", "game_year", "pitch_type", "p_throws", "stand",
-          "balls", "strikes", "outcome", "fold", INPUTS)
+          "balls", "strikes", "outcome", "fold", "zone", INPUTS)
 
 # Clean pitches to model-ready rows. Every step is pitch-level or uses the
 # pitcher's own season, so nothing here needs a fold
@@ -21,15 +21,17 @@ prep_pitches <- function(path = "data/pitches_clean.rds") {
 # Train on four folds, score the fifth, five times. The run-value table is
 # rebuilt from training pitchers inside the loop, and the held-out pitches are
 # valued with THAT table, so neither the model nor the answer key ever saw them
-run_cv <- function(p, depth = 4) {
+# `fit` and `score` default to the pre-registered model; the linear baseline
+# and the depth-6 check pass their own, so all three share one fold loop
+run_cv <- function(p, fit = fit_model, score = score_both_sides) {
   map(1:5, function(k) {
     train <- p |> filter(fold != k)
     held  <- p |> filter(fold == k)
     tab   <- rv_table(train)
     value <- function(d) left_join(d, tab, by = c("outcome", "balls", "strikes"))
-    model <- fit_model(value(train), depth = depth)
+    model <- fit(value(train))
     message("fold ", k, " fit on ", format(nrow(train), big.mark = ","), " pitches")
-    score_both_sides(model, value(held)) |> select(-delta_run_exp)
+    score(model, value(held)) |> select(-delta_run_exp)
   }) |>
     list_rbind()
 }

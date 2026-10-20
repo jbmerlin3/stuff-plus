@@ -41,3 +41,23 @@ boot_ci <- function(d, stat, reps = 1000) {
   draws <- map_dbl(1:reps, \(i) stat(list_rbind(by_p[as.character(sample(ids, replace = TRUE))])))
   c(estimate = stat(d), lo = unname(quantile(draws, 0.025)), hi = unname(quantile(draws, 0.975)))
 }
+
+# All four gates from out-of-fold predictions (PREREG.md section 7). Raw
+# predictions, never the 100 scale (amendment 4)
+run_gates <- function(oof) {
+  sg <- season_grades(oof)
+  yp <- year_pairs(sg)
+  g1 <- boot_ci(yp, edge)
+  g2 <- yp |> summarise(edge = edge(pick(everything())), pairs = n(), .by = family)
+  g3 <- boot_ci(yp, within_type_r)
+  g3_types <- yp |> filter(pitch_type %in% GATE3_TYPES) |>
+    summarise(r = cor(grade, rv100_next), pairs = n(), .by = pitch_type)
+  g4 <- known_answers(sg)
+  list(
+    gate1 = g1, gate2 = g2, gate3 = g3, gate3_types = g3_types, gate4 = g4$table,
+    pass = c(gate1 = unname(g1["lo"] > 0),
+             gate2 = all(g2$edge > 0),
+             gate3 = unname(g3["lo"] > 0) & sum(g3_types$r > 0) >= 5,
+             gate4 = g4$pass)
+  )
+}
