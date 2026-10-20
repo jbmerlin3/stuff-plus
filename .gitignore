@@ -3,3 +3,4 @@ data/
 *.ubj
 .Rhistory
 .Rproj.user/
+.RDataTmp*
