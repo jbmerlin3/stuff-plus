@@ -814,6 +814,35 @@ of a scouting app outweighed it.
 
 ---
 
+## 2026-10-20: "Differentiation" hypothesis tested on release height
+
+**His hypothesis.** "Think of release height and side as a bell curve... what
+matters is that you aren't towards the mean. You have to be differentiated,
+either on the low tail or the high tail."
+
+**Result, four-seamers 2022-2025 (1,265 pitcher-seasons, raw whiff per
+swing).** One-sided. Lowest release-height decile 25.7%, middle 21.5 to 23.4%,
+top three deciles 19.6 to 20.8%, even though high slots carry more ride (17.4"
+vs 13.0"). From a high slot the ball arrives at a steeper angle, so ride
+flattens it less. Release side also one-sided, the other way (widest deciles
+~24% vs ~21%). The model's learned release-height effect has the same
+monotone shape (+0.15 to -0.07 log-odds); a tree could have learned a U and the
+data has none.
+
+**Where the idea holds.** "Different from expected," not "far from average":
+Schlittler (6.1 ft slot, 16.9" ride, 35% whiffs, graded 108) gets more from his
+ride than his slot predicts. The data-supported form is ride relative to arm
+slot (v5's carry_res idea). v3 candidates for 2027: location-adjusted VAA, ride
+relative to slot, uniqueness.
+
+**Schlittler, explained by the model's contributions.** Velocity is the biggest
+lever, and 98 adds about half what 100 to 101 does; his ride adds a little; his
+high release subtracts. Mirror case: Josh Ekness grades 128 (best FF) on a
+5.2 ft slot but gets 24% whiffs. Release height is a proxy for approach angle
+that misfires at both ends.
+
+---
+
 ## Open items
 
 - None from v1. The known-answer list was signed off 2026-10-19 and the old
