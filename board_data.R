@@ -4,7 +4,8 @@ suppressMessages({ library(tidyverse); source("R/validity.R") })
 out <- commandArgs(trailingOnly = TRUE)[1]
 sc <- readRDS("outputs/scored_2026.rds")
 scale <- read_csv("models/stuff_v2_scale.csv", show_col_types = FALSE)
-to100 <- function(x) round(100 + 10 * (x - scale$mu) / scale$sigma)
+group <- function(pt) case_when(pt %in% c("FF", "SI", "FC") ~ "fastball", pt %in% c("CH", "FS") ~ "offspeed",
+                                pt == "SL" ~ "hard breaker", pt %in% c("ST", "SV", "CU") ~ "soft breaker")
 
 new <- sc |>
   summarise(n = n(), g = mean(pred),
@@ -15,7 +16,8 @@ new <- sc |>
             gap = mean(velo_gap), axis = mean(axis_diff, na.rm = TRUE),
             .by = c(pitcher, player_name, p_throws, pitch_type)) |>
   filter(n >= 50) |>
-  mutate(v2 = to100(g), vsR = to100(gR), vsL = to100(gL))
+  mutate(group = group(pitch_type)) |> inner_join(scale, by = "group") |>
+  mutate(across(c(g, gR, gL), \(x) round(100 + 10 * (x - mu) / sigma)), v2 = g, vsR = gR, vsL = gL)
 
 old <- read_csv("/Users/jonathanmerlin/statcast-arsenal-app-docs/fg_stuff/fg_stuff_2026-03-26_2026-09-27.csv",
                 show_col_types = FALSE) |>
