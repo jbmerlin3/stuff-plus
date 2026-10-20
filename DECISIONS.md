@@ -789,6 +789,31 @@ glove-side split (Schlittler FC 104 vs RHH, 96 vs LHH), splitters steady (Smith
 
 ---
 
+## 2026-10-20: 100 is per pitch group, not league-wide
+
+**Decision.** 100 is the average pitch within its group and 10 points one SD
+across pitcher pitch types within the group. Groups: fastball (FF, SI, FC);
+offspeed (CH, FS, FO); hard breaker (SL); soft breaker (ST, SV, CU, KC, CS).
+
+**Why, in his words.** "We need to group by pitch type... I've realized that
+this is necessary." Cutter is a fastball. KC and CS go with soft breakers and
+FO with offspeed, matching how the app already folds them.
+
+**What changed and what did not.** Display only. The model, its predictions and
+every validation number (the 2026 exam ran on raw predictions) are unchanged;
+the 2026 daily scores file is byte-identical. Constants from 2022-2025: average
+whiff probability fastball 0.204, hard breaker 0.329, offspeed 0.316, soft
+breaker 0.314; SDs 0.039 to 0.050, against 0.075 for the single scale, which was
+inflated by the gap between groups. 2026 full-season medians (250+ pitches):
+102 to 104 in every group.
+
+**Trade-off, stated.** Grades no longer compare across groups: a 110 sinker and
+a 110 sweeper are each well above their own group, not equally nasty. This
+reverses the 2026-10-19 league-wide choice; the familiar convention for readers
+of a scouting app outweighed it.
+
+---
+
 ## Open items
 
 - None from v1. The known-answer list was signed off 2026-10-19 and the old

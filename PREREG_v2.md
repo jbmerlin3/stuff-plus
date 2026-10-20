@@ -42,3 +42,9 @@ the one exam on 2026. Decisions behind each item are in DECISIONS.md.
     from 2026's own pitches.
 - **One run.** A true bug (code doing something other than this document says)
   is fixed, documented, and rerun. A disappointing number is a finding.
+
+## Note, 2026-10-20 (after the exam)
+
+The display scale changed to per-group 100 (fastball, offspeed, hard breaker,
+soft breaker). The exam's verdict is unaffected: it ran on raw predictions, and
+the model is unchanged.
