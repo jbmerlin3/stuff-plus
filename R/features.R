@@ -31,7 +31,8 @@ primary_fastball <- function(df) {
     filter(pitch_type %in% FASTBALLS) |>
     group_by(pitcher, game_year, pitch_type) |>
     summarise(n_fb = n(), share = n() / first(season_n),
-              fb_velo = mean(release_speed), .groups = "drop") |>
+              fb_velo = mean(release_speed), fb_ivb = mean(ivb), fb_hb = mean(hb),
+              .groups = "drop") |>
     mutate(qualifies = share >= 0.10 & n_fb >= 20)
 
   hardest  <- fb |> filter(qualifies) |>
@@ -40,13 +41,16 @@ primary_fastball <- function(df) {
     slice_max(n_fb, n = 1, with_ties = FALSE, by = c(pitcher, game_year))
 
   bind_rows(hardest, fallback) |>
-    transmute(pitcher, game_year, fb_type = pitch_type, fb_velo,
+    transmute(pitcher, game_year, fb_type = pitch_type, fb_velo, fb_ivb, fb_hb,
               fb_rule = if_else(qualifies, "hardest", "fallback"))
 }
 
-# No fastball at all leaves velo_gap missing, which XGBoost routes on its own
+# No fastball at all leaves velo_gap missing, which XGBoost routes on its own.
+# ivb_gap and hb_gap are used ONLY by the pre-registered changeup fallback (7a)
 add_velo_gap <- function(df) {
   df |>
     left_join(primary_fastball(df), by = c("pitcher", "game_year")) |>
-    mutate(velo_gap = release_speed - fb_velo)
+    mutate(velo_gap = release_speed - fb_velo,
+           ivb_gap  = ivb - fb_ivb,
+           hb_gap   = hb - fb_hb)
 }

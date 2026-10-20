@@ -530,6 +530,20 @@ writeup built from this log.
 
 ---
 
+## 2026-10-20: Line-by-line review; changeup fallback trigger (amendment 6)
+
+**Review result.** Everything in data, target, inputs, settings, folds and
+gates matched. Four gaps fixed before the shot (reproducibility check,
+explicit depth-6 comparison, worked examples, mean Stuff+ on the 100 scale);
+the changeup fallback was coded in advance. Full checklist: REVIEW.md.
+
+**His call.** The changeup fallback runs only if gate 3 fails with CH among
+the misses. Options were that, or whenever CH misses (which would make CH a
+must-pass type). Took the recommendation, consistent with gate 3's one-miss
+rule.
+
+---
+
 ## Accepted, not discussed (revisit in the loop)
 
 - **Known-answer list.** Draft of 15 elite and 4 weak pitches, waiting on his

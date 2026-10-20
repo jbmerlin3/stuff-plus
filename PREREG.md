@@ -321,3 +321,24 @@ After a council review of the plan (DECISIONS.md, 2026-10-20):
   pitcher's results; dropping extension is a bet, not a finding.
 - **Reproducibility:** package versions are recorded in `renv.lock` before the
   shot.
+
+## Amendment 6, 2026-10-20 (before fitting)
+
+From the line-by-line review (`REVIEW.md`):
+
+- **Changeup fallback trigger, section 7a.** 7a was drafted when gate 3
+  required all six types and was not updated when gate 3 began allowing one
+  miss. Resolved: the fallback runs **only if gate 3 fails with CH among the
+  misses**. If CH is the single allowed miss, gate 3 passes, nothing is refit,
+  and the weak CH result is reported. The fallback adds IVB and HB gaps to the
+  hardest fastball as inputs for every pitch, refits once, and reruns all four
+  gates. Its code is written before the shot.
+- **Reproducibility is checked, not assumed:** the dry run fits one fold twice
+  and requires identical predictions.
+- **Depth-6 check compares verdicts explicitly** and prints RESOLVED or
+  UNRESOLVED.
+- **Worked examples** (Strider FF 2023, Ohtani ST 2023, Williams CH 2023) and
+  **mean Stuff+ by type on the 100 scale** are produced in the shot.
+- **Deferred to after the verdict** (cannot affect any gate): vs RHH and vs LHH
+  labels, the pitcher-level K-BB% and v5g comparison, leaderboards, and source
+  comparisons. Their code is written before anyone looks at a board.

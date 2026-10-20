@@ -4,7 +4,7 @@ source("R/target.R")
 source("R/model.R")
 
 KEEP <- c("pitcher", "player_name", "game_year", "pitch_type", "p_throws", "stand",
-          "balls", "strikes", "outcome", "fold", "zone", INPUTS)
+          "balls", "strikes", "outcome", "fold", "zone", INPUTS, "ivb_gap", "hb_gap")
 
 # Clean pitches to model-ready rows. Every step is pitch-level or uses the
 # pitcher's own season, so nothing here needs a fold

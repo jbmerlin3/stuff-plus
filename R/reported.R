@@ -37,11 +37,11 @@ by_type <- function(oof) {
 
 # 5. Final model on all of 2022-2025, the 100-scale constants, and what drives
 #    grades. Built only after the gates are read
-final_fit <- function(p) {
+final_fit <- function(p, inputs = INPUTS) {
   tab   <- rv_table(p)
   p     <- p |> left_join(tab, by = c("outcome", "balls", "strikes"))
-  model <- fit_model(p)
-  sc    <- score_both_sides(model, p)
+  model <- fit_model(p, inputs = inputs)
+  sc    <- score_both_sides(model, p, inputs)
   sg    <- sc |> summarise(n = n(), g = mean(pred), .by = c(pitcher, game_year, pitch_type))
   list(model = model, rv_table = tab,
        mu = mean(sc$pred), sigma = sd(sg$g[sg$n >= 100]),
@@ -49,8 +49,8 @@ final_fit <- function(p) {
 }
 
 # Feature contributions for one pitch: which inputs pushed its grade up or down
-explain_pitch <- function(model, p, who, type, year) {
+explain_pitch <- function(model, p, who, type, year, inputs = INPUTS) {
   d <- p |> filter(player_name == who, pitch_type == type, game_year == year)
-  contrib <- predict(model, xgb.DMatrix(to_matrix(d)), predcontrib = TRUE)
+  contrib <- predict(model, xgb.DMatrix(to_matrix(d, inputs)), predcontrib = TRUE)
   colMeans(contrib)
 }
