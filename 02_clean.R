@@ -15,6 +15,11 @@ KEEP_COLS <- c(
   "zone"   # for the reported location check (amendment 5), never a model input
 )
 
+NUMERIC_TYPES <- c("game_year", "game_pk", "at_bat_number", "pitch_number", "balls",
+                   "strikes", "release_speed", "release_spin_rate", "release_extension",
+                   "release_pos_x", "release_pos_z", "pfx_x", "pfx_z", "arm_angle",
+                   "spin_axis", "plate_z", "zone", "delta_run_exp")
+
 # Not real pitch outcomes (clock violations, pitchouts) or not stuff outcomes (bunts)
 DROP_DESC <- c("automatic_ball", "automatic_strike", "pitchout",
                "foul_bunt", "missed_bunt", "bunt_foul_tip")
@@ -56,7 +61,11 @@ load_pitches <- function(path) {
     select(all_of(KEEP_COLS)) |>
     filter(game_year %in% SEASONS) |>
     # Integer IDs so joins to FanGraphs xMLBAMID work later
-    mutate(pitcher = as.integer(pitcher))
+    mutate(pitcher = as.integer(pitcher)) |>
+    # One type per column whatever the source. The 2022-2025 cache stores balls,
+    # strikes and zone as text and the 2026 store as numbers; joins between them
+    # failed in the v2 exam dry run (2026-10-20)
+    mutate(across(any_of(NUMERIC_TYPES), as.numeric), game_date = as.Date(game_date))
 }
 
 # Computed before any pitch-type filtering, because FA and EP tags are the evidence
