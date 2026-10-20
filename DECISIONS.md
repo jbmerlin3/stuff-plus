@@ -752,6 +752,24 @@ itself misses bats. 2026 is spent as an exam, so v3 is judged on 2027.
 
 ---
 
+## 2026-10-20: Release y stays out; Rogers stays as a documented limit
+
+**Release y.** He asked whether to add release x, y and z. x (side) and z
+(height) are already inputs. y is distance from the plate at release, about
+60.5 ft minus extension, so it is extension under another name. His call holds:
+"I'm pretty confident we shouldn't use extension." Not added.
+
+**Axis differential runs largest on the slider family.** Calibration order: CU
+~0, FF ~8, SI and CH 12 to 20, SL, FC and ST 24 to 31 degrees. Seam effects are
+real on sweepers, but sliders and cutters carry heavy gyro spin, which makes the
+measured 2D axis less meaningful, so part of their gap is measurement. Consistent
+with the result: the axis input helped SI and FF most and ST barely.
+
+**Tyler Rogers.** "We'll leave Rogers as is, and understand his limitations to
+the model." A nastiness grade does not reward weak contact or rarity.
+
+---
+
 ## Open items
 
 - None from v1. The known-answer list was signed off 2026-10-19 and the old
