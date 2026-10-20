@@ -205,6 +205,10 @@ gate 3 pools the types and allows one miss.
    type, top and bottom 15, 250-pitch minimum, for 2025 and for 2026 through
    2026-09-27 from the season store. Each row shows the grade, pitch count and
    inputs. Plus one table per type of average vs RHH minus vs LHH.
+   **Expected before fitting (Jonathan, 2026-10-19):** "It should be tougher on
+   same-sided hitters. I'd expect curveballs with more downward action to be
+   more hand neutral." So the same-side advantage should be largest for ST and
+   SL and smallest for CU and FS. Reported, not gated.
 8. **Source comparisons** (2026 only if the gates pass): FanGraphs Stuff+ on its
    2026-03-26 to 2026-08-17 export window, and tjStuff+ for 2024. Same pitchers,
    same windows, 250+ pitches. Spearman rank r per pitch type and the ten largest

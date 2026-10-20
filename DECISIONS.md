@@ -486,6 +486,24 @@ line-by-line plan-versus-code review and a structure-only dry run.
 
 ---
 
+## 2026-10-19: His platoon prediction, recorded before fitting
+
+**Prediction, in his words.** "It should be tougher on same-sided hitters. I'd
+expect curveballs with more downward action to be more hand neutral."
+
+**Why it holds up.** Vertical movement looks the same to either hitter; lateral
+movement breaks away from a same-side hitter and into an opposite-side one. So
+the same-side advantage should be largest for sweepers and sliders, smallest for
+curveballs and splitters. Added to the split-check table in PREREG.md as an
+expectation, not a gate.
+
+**Interview line on why batter side is allowed but pitch type is not.** "Pitch
+type is a summary of the shape, so it is a shortcut. Batter side is context, so
+the model learns it, and every pitch is scored against both sides so the
+overall grade is about the pitch."
+
+---
+
 ## Accepted, not discussed (revisit in the loop)
 
 - **Known-answer list.** Draft of 15 elite and 4 weak pitches, waiting on his
