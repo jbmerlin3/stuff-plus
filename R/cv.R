@@ -3,7 +3,7 @@ source("R/features.R")
 source("R/target.R")
 source("R/model.R")
 
-KEEP <- c("pitcher", "player_name", "game_year", "pitch_type", "p_throws", "stand",
+KEEP <- c("pitcher", "player_name", "game_year", "game_date", "pitch_type", "p_throws", "stand",
           "balls", "strikes", "outcome", "fold", "zone", "description", INPUTS, "ivb_gap", "hb_gap", "release_spin_rate", "axis_diff")
 
 # Clean pitches to model-ready rows. Every step is pitch-level or uses the

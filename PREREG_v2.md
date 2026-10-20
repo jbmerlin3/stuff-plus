@@ -30,5 +30,15 @@ the one exam on 2026. Decisions behind each item are in DECISIONS.md.
 - **Reported, not gated:** run value on swings; each pitch type's r; FanGraphs
   Stuff+ on the same pitches over its 2026-03-26 to 2026-08-17 export window;
   2026 leaderboards by pitch type with FanGraphs alongside.
+- **Also reported (added after the council, still before any 2026 result):**
+  - **Face validity:** the signed-off known-answer list (PREREG.md section 8)
+    on v2's out-of-fold 2022-2025 grades: share of elite entries in the top 20%
+    and weak entries in the bottom 20% of their type that season (250+ pitches;
+    FO ranked with FS).
+  - **Reliability:** split-half correlation of 2026 grades at 25, 50, 100 and
+    200 pitches.
+  - **Data checks:** share of 2026 pitches missing `spin_axis` (and so the axis
+    differential). Fastball baselines and axis differentials for 2026 are built
+    from 2026's own pitches.
 - **One run.** A true bug (code doing something other than this document says)
   is fixed, documented, and rerun. A disappointing number is a finding.
