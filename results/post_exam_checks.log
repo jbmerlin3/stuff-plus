@@ -1,0 +1,115 @@
+Within-type whiff r, 2026:
+  returning         r rows
+1      TRUE 0.5216025  925
+2     FALSE 0.4405392   57
+New pitchers, pitcher-clustered bootstrap 95% interval: 0.2 0.65 
+
+Naive baselines, within-type whiff r, 2026:
+  check                                     r  rows
+  <chr>                                 <dbl> <int>
+1 velocity alone                        0.160   982
+2 Stuff+ on rows with a 2025 whiff rate 0.525   759
+3 2025 whiff rate, 100+ pitches         0.614   759
+
+Same 767 rows. Whiff per swing: ours 0.497 FanGraphs 0.483 
+Run value on swings: ours 0.259 FanGraphs 0.28 
+
+Grade vs zone rate by pitch type, 2026, 100+ pitches:
+   pitch_type r_grade_zone cases
+1          CH        0.016   247
+2          CU       -0.207   156
+3          FC       -0.183   191
+4          FF       -0.040   493
+5          FO        1.000     2
+6          FS       -0.203    59
+7          KC       -0.127    29
+8          SI       -0.163   323
+9          SL       -0.254   290
+10         ST       -0.216   186
+11         SV       -0.554     9
+
+Median absolute axis differential by pitch type, 2026:
+   pitch_type median_abs
+1          FF        9.0
+2          CU        9.0
+3          KC        9.6
+4          CH       14.6
+5          SI       19.1
+6          FO       20.0
+7          FS       21.2
+8          SV       22.7
+9          FC       27.0
+10         SL       27.2
+11         ST       30.9
+
+Same-side minus opposite-side predicted whiff, 2026:
+   pitch_type same_minus_opp pitches
+1          FC         0.0488   56954
+2          ST         0.0480   59055
+3          SL         0.0297   93281
+4          SV         0.0263    3179
+5          FF         0.0201  218232
+6          FS         0.0188   22969
+7          CH         0.0142   79549
+8          FO         0.0131     463
+9          CU         0.0089   45829
+10         KC         0.0050   10990
+11         SI        -0.0062  118139
+
+Extension vs whiff per swing given the grade, 2026 FF:
+  min_pitches  rows partial_r
+        <dbl> <int>     <dbl>
+1         250   303     0.006
+2          50   596     0.081
+
+Four-seam pitcher-seasons: 1267 
+By release height decile:
+   decile whiff  ride
+    <int> <dbl> <dbl>
+ 1      1  25.4  13  
+ 2      2  23.3  15  
+ 3      3  23    15  
+ 4      4  22.4  16.1
+ 5      5  22.5  16.1
+ 6      6  21.6  16.3
+ 7      7  21.4  16.4
+ 8      8  19.6  16.5
+ 9      9  20.4  16.9
+10     10  20.1  17.4
+By release side decile:
+   decile whiff
+    <int> <dbl>
+ 1      1  21.2
+ 2      2  20.5
+ 3      3  21.4
+ 4      4  21.6
+ 5      5  21.3
+ 6      6  22.4
+ 7      7  22.6
+ 8      8  21.5
+ 9      9  23.8
+10     10  23.5
+
+Duran splitter:
+  player_name  pitch_type game_year     n whiff_pct whiff_rank    of
+  <chr>        <chr>          <dbl> <int>     <dbl>      <int> <int>
+1 Duran, Jhoan FS              2023   275      27.1         19    23
+2 Duran, Jhoan FS              2024   277      21.2         32    34
+3 Duran, Jhoan FS              2025   427      22.9         31    33
+4 Duran, Jhoan FS              2026   442      28.5         25    33
+
+Rogers sinker:
+  player_name   pitch_type game_year     n whiff_pct whiff_rank    of
+  <chr>         <chr>          <dbl> <int>     <dbl>      <int> <int>
+1 Rogers, Tyler SI              2022   593      12.8        110   170
+2 Rogers, Tyler SI              2023   562      11.4        123   166
+3 Rogers, Tyler SI              2024   637      15.4         46   163
+4 Rogers, Tyler SI              2025   727      12.4         86   153
+5 Rogers, Tyler SI              2026   771      12          115   171
+
+2026 grades:
+      player_name pitch_type stuff_plus    n whiff_pct velo   ivb release_ht
+1    Ekness, Josh         FF        128  294      23.7 98.0  14.6       5.25
+2 Schlittler, Cam         FF        108 1345      35.0 98.0  16.9       6.11
+3   Rogers, Tyler         SI         86  768      12.1 83.2 -12.5       1.25
+4    Duran, Jhoan         FS         81  442      28.5 97.6   2.9       6.20

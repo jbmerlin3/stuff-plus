@@ -1,6 +1,21 @@
-data/
-*.rds
-*.ubj
-.Rhistory
+# R session files
 .Rproj.user/
+.Rhistory
+.RData
 .RDataTmp*
+.Rapp.history
+
+# macOS
+.DS_Store
+
+# Local assistant config
+CLAUDE.md
+.claude/
+
+# RStudio project file
+*.Rproj
+
+# Data and run artifacts are rebuilt by scripts/; see the README
+data/
+outputs/
+*.rds

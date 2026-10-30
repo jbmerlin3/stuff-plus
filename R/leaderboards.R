@@ -1,8 +1,12 @@
+# leaderboards.R
+# The board the exam wrote (one league-wide scale, as it ran) and the FanGraphs comparison.
+
 library(tidyverse)
 
-# Stuff+ per pitcher and pitch type for one season, on the 100 scale (PREREG
-# section 5). Grades are out-of-fold. vs RHH / vs LHH map from same and
-# opposite side by the pitcher's hand
+# FanGraphs exports aren't redistributed; comparisons skip when these are absent
+FG_2025 <- "data/external/fg_stuff_2025-03-18_2025-09-30.csv"
+FG_2026 <- "data/external/fg_stuff_2026-03-26_2026-08-17.csv"
+
 season_board <- function(oof, mu, sigma, year, min_n = 250) {
   to100 <- \(x) round(100 + 10 * (x - mu) / sigma)
   oof |>
@@ -23,8 +27,7 @@ season_board <- function(oof, mu, sigma, year, min_n = 250) {
     arrange(pitch_type, -stuff_plus)
 }
 
-# FanGraphs Stuff+ beside ours. FG has no sweeper column: its "SL" covers both
-# SL and ST, so both of our rows compare to FG SL (flagged, not hidden). FA = FF
+# FanGraphs has no sweeper column: its SL covers SL and ST, so both compare to it. FA = FF.
 add_fangraphs <- function(board, fg_path) {
   fg <- read_csv(fg_path, show_col_types = FALSE) |>
     select(pitcher = MLBAMID, starts_with("Stf+ ")) |>

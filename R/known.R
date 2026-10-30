@@ -1,7 +1,8 @@
+# known.R
+# Known-answer list, fixed before any fit. Names as Statcast writes them.
+
 library(tidyverse)
 
-# Signed off by Jonathan 2026-10-19 (PREREG.md section 8). Names as Statcast
-# writes them
 KNOWN <- tribble(
   ~player_name,          ~pitch_type, ~game_year, ~list,
   "Strider, Spencer",    "FF", 2023, "elite",  "Miller, Mason",       "FF", 2024, "elite",
@@ -16,9 +17,7 @@ KNOWN <- tribble(
   "Corbin, Patrick",     "SI", 2023, "weak",   "Miley, Wade",         "FF", 2023, "weak"
 )
 
-# Percentile of each grade within its pitch type and season, among
-# pitcher-seasons with 250+ pitches. FO has one such season (Senga 2023), so
-# FO is ranked inside a combined FS+FO pool
+# Percentile within pitch type and season at 250+ pitches. FO has one such season, so it ranks with FS.
 known_answers <- function(sg) {
   ranked <- sg |>
     filter(n >= 250) |>
@@ -27,7 +26,7 @@ known_answers <- function(sg) {
   hits <- KNOWN |>
     left_join(ranked, by = c("player_name", "pitch_type", "game_year")) |>
     mutate(hit = if_else(list == "elite", pct >= 0.80, pct <= 0.20))
-  # A missing entry fails loudly rather than being dropped quietly
+  # A missing entry stops the run instead of being dropped
   stopifnot(!anyNA(hits$pct))
   list(table = hits,
        pass  = sum(hits$hit[hits$list == "elite"]) >= 10 &

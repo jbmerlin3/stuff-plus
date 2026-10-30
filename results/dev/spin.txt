@@ -1,0 +1,32 @@
+
+== spin_one ==
+dev 2022-25 within-type r, whiff/swing: 0.274  rv on swings: 0.203 
+2025, same 977 pitches: ours 0.227  FanGraphs 0.512  gap -0.285 
+predictive edge (reported only): -0.021 
+# A tibble: 8 × 3
+  pitch_type r_whiff  rows
+  <chr>        <dbl> <int>
+1 CH          0.216    401
+2 CU          0.337    262
+3 FC          0.284    318
+4 FF          0.408   1265
+5 FS         -0.0282   105
+6 SI          0.267    650
+7 SL          0.221    659
+8 ST          0.124    262
+
+== spin_family ==
+dev 2022-25 within-type r, whiff/swing: 0.231  rv on swings: 0.171 
+2025, same 977 pitches: ours 0.198  FanGraphs 0.512  gap -0.314 
+predictive edge (reported only): -0.053 
+# A tibble: 8 × 3
+  pitch_type  r_whiff  rows
+  <chr>         <dbl> <int>
+1 CH          0.187     401
+2 CU          0.311     262
+3 FC          0.00755   318
+4 FF          0.403    1265
+5 FS         -0.0672    105
+6 SI          0.232     650
+7 SL          0.214     659
+8 ST          0.119     262

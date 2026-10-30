@@ -1,0 +1,60 @@
+
+=== V2 EXAM, 2026 ===
+pooled within-type whiff r: 0.518  bar 0.38 -> PASS 
+
+run value on swings r: 0.281 
+by pitch type:
+  pitch_type   r_whiff rows
+1         CH 0.5076043  112
+2         CU 0.4180994   57
+3         FC 0.6397749   83
+4         FF 0.5263286  303
+5         FS 0.4755977   33
+6         SI 0.6497374  171
+7         SL 0.5955510  131
+8         ST 0.3300103   92
+
+FanGraphs window (to 2026-08-17), same 767 pitches: ours 0.497  FanGraphs 0.483 
+
+reliability (split-half):
+# A tibble: 4 × 3
+  pitches     r cases
+    <dbl> <dbl> <int>
+1      25 0.992  2569
+2      50 0.996  1985
+3     100 0.998  1229
+4     200 0.999   529
+
+spin_axis missing in 2026: 0.16 %
+            used   (Mb) gc trigger   (Mb) limit (Mb)  max used   (Mb)
+Ncells   2564619  137.0    4513950  241.1         NA   4513950  241.1
+Vcells 159698371 1218.5  291971565 2227.6      16384 303872380 2318.4
+fold 1 fit on 2,261,133 pitches
+fold 2 fit on 2,292,896 pitches
+fold 3 fit on 2,293,577 pitches
+fold 4 fit on 2,245,153 pitches
+fold 5 fit on 2,205,189 pitches
+
+face validity on 2022-2025 (reported): elite in top 20%: 10 of 15; weak in bottom 20%: 4 of 4
+# A tibble: 19 × 6
+   player_name        pitch_type game_year list     pct hit  
+   <chr>              <chr>          <dbl> <chr>  <dbl> <lgl>
+ 1 Strider, Spencer   FF              2023 elite 0.965  TRUE 
+ 2 Miller, Mason      FF              2024 elite 0.994  TRUE 
+ 3 Misiorowski, Jacob FF              2025 elite 0.971  TRUE 
+ 4 Holmes, Clay       SI              2022 elite 0.953  TRUE 
+ 5 Clase, Emmanuel    FC              2024 elite 0.190  FALSE
+ 6 Strider, Spencer   SL              2023 elite 0.419  FALSE
+ 7 Miller, Mason      SL              2024 elite 0.981  TRUE 
+ 8 Ohtani, Shohei     ST              2023 elite 0.871  TRUE 
+ 9 Glasnow, Tyler     CU              2024 elite 0.935  TRUE 
+10 Snell, Blake       CU              2023 elite 0.358  FALSE
+11 Williams, Devin    CH              2023 elite 0.824  TRUE 
+12 Skubal, Tarik      CH              2024 elite 0.957  TRUE 
+13 Skenes, Paul       FS              2024 elite 0.576  FALSE
+14 Senga, Kodai       FO              2023 elite 0.913  TRUE 
+15 Duran, Jhoan       FS              2024 elite 0      FALSE
+16 Hendricks, Kyle    SI              2024 weak  0.0683 TRUE 
+17 Greinke, Zack      FF              2023 weak  0.0193 TRUE 
+18 Corbin, Patrick    SI              2023 weak  0.145  TRUE 
+19 Miley, Wade        FF              2023 weak  0.119  TRUE 

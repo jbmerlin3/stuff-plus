@@ -1,11 +1,12 @@
+# features.R
+# Model inputs built from one pitch or from the pitcher's own season.
+
 library(tidyverse)
 
 FASTBALLS <- c("FF", "SI", "FC")
 
-# Arm side positive for every pitcher; glove-side pitches (sliders, sweepers,
-# most cutters) stay negative. Statcast's x is from the catcher's view, where a
-# righty's arm side is negative, so the RIGHTIES get the flip. The first version
-# flipped lefties: hands matched but every sign was backwards (audit 2026-10-19)
+# Arm side positive for both hands. Statcast x is from the catcher's view, where
+# a righty's arm side is negative, so righties flip.
 add_shape <- function(df) {
   df |>
     mutate(
@@ -18,12 +19,7 @@ add_shape <- function(df) {
     )
 }
 
-# The fastball hitters time to: the HARDEST FF/SI/FC he throws at least 10% of
-# the time and 20+ times that season. The floors stop a rare show-me 98 or a
-# 4-pitch sample from becoming the baseline for his whole arsenal. If none
-# qualifies, his most-thrown fastball. Most-thrown alone (the first rule) made a
-# cutter-first pitcher's changeup look faster than his fastball (Brazoban).
-# Built per pitcher-season from his own pitches, so it needs no fold
+# Hardest FF/SI/FC thrown 10%+ of the time and 20+ times that season, else his most-thrown fastball
 primary_fastball <- function(df) {
   fb <- df |>
     group_by(pitcher, game_year) |>
@@ -45,8 +41,8 @@ primary_fastball <- function(df) {
               fb_rule = if_else(qualifies, "hardest", "fallback"))
 }
 
-# No fastball at all leaves velo_gap missing, which XGBoost routes on its own.
-# ivb_gap and hb_gap are used ONLY by the pre-registered changeup fallback (7a)
+# No fastball leaves velo_gap NA, which XGBoost routes on its own.
+# ivb_gap and hb_gap are not v2 inputs; only the development experiments use them.
 add_velo_gap <- function(df) {
   df |>
     left_join(primary_fastball(df), by = c("pitcher", "game_year")) |>
@@ -55,12 +51,8 @@ add_velo_gap <- function(df) {
            hb_gap   = hb - fb_hb)
 }
 
-# Axis differential (v2 experiment 4): the gap between the spin axis Hawk-Eye
-# measures and the axis implied by the ball's actual movement. A gap means
-# something besides spin moved the ball (seam-shifted wake): the pitch breaks
-# differently than its spin tells the hitter. Calibrated 2026-10-20: curveballs
-# sit near 0 for both hands; sinkers, changeups and splitters run larger; the
-# sign flips by hand, so lefties are mirrored
+# Movement axis minus measured spin axis: a gap means something besides spin moved
+# the ball. The sign flips by hand, so lefties are mirrored.
 add_axis_diff <- function(df) {
   df |>
     mutate(move_axis = (180 + atan2(-pfx_x, pfx_z) * 180 / pi) %% 360,

@@ -1,0 +1,14 @@
+Rerun on the build machine from raw inputs, with the code in this repo.
+=== clean_dev 11:04:32
+=== clean_2026 11:06:09
+dev identical: TRUE 
+2026 identical: TRUE 
+=== export 11:06:31
+=== compare_export 11:07:20
+daily-identical
+scale-identical-except-built
+model-identical
+parity-identical
+=== exam 11:07:46
+=== post_exam 11:10:02
+exam log: no differences except memory lines

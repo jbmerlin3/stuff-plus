@@ -1,0 +1,8 @@
+Outcome mapped for 99.88% of pitches
+1. every pitcher in exactly one fold
+fold 1: no shared pitchers, table moves up to 0.023 runs without them, every pitch valued
+fold 2: no shared pitchers, table moves up to 0.014 runs without them, every pitch valued
+fold 3: no shared pitchers, table moves up to 0.017 runs without them, every pitch valued
+fold 4: no shared pitchers, table moves up to 0.039 runs without them, every pitch valued
+fold 5: no shared pitchers, table moves up to 0.022 runs without them, every pitch valued
+ALL LEAK TESTS PASS

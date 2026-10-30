@@ -1,14 +1,17 @@
-# Rscript run_shot.R dry    -> small slice, structure only, no grades printed
-# Rscript run_shot.R shot   -> the one pre-registered run (PREREG.md)
+# run_v1.R
+# v1, the run-value model: the one pre-registered run (docs/preregistration/v1.md).
+#   Rscript scripts/run_v1.R dry    small slice, structure only, no grades printed
+#   Rscript scripts/run_v1.R full   the run; results/v1_run.log is its output
+
 suppressMessages({ source("R/cv.R"); source("R/gates.R"); source("R/known.R"); source("R/reported.R") })
 mode <- commandArgs(trailingOnly = TRUE)[1]
-stopifnot(mode %in% c("dry", "shot"))
-out <- file.path("outputs", mode); dir.create(out, recursive = TRUE, showWarnings = FALSE)
+stopifnot(mode %in% c("dry", "full"))
+out <- file.path("outputs", paste0("v1_", mode)); dir.create(out, recursive = TRUE, showWarnings = FALSE)
 
 p <- prep_pitches()
 
 if (mode == "dry") {
-  # Known-answer pitchers plus 400 random others, so every function has data
+  # Known-answer pitchers plus 400 random others
   set.seed(3)
   keep <- union(p$pitcher[p$player_name %in% KNOWN$player_name], sample(unique(p$pitcher), 400))
   p <- p |> filter(pitcher %in% keep)
@@ -18,12 +21,12 @@ if (mode == "dry") {
   cat("input ranges:\n"); print(round(sapply(oof[, setdiff(INPUTS_CH, "same_side")], range, na.rm = TRUE), 1))
   cat("share of pitches where the two sides differ:", round(mean(oof$pred_same != oof$pred_opp), 3), "\n")
   cat("pitches per fold:\n"); print(table(oof$fold))
-  # Same data, same seed, fit twice: predictions must be identical
+  # Same data and seed, fit twice: predictions must match
   tr <- p |> filter(fold != 1) |> left_join(rv_table(p |> filter(fold != 1)), by = c("outcome", "balls", "strikes"))
   ho <- p |> filter(fold == 1)
   cat("reproducible:", identical(predict(fit_model(tr), xgb.DMatrix(to_matrix(ho))),
                                  predict(fit_model(tr), xgb.DMatrix(to_matrix(ho)))), "\n")
-  # Run every later step, report only that it ran
+  # Every later step, reporting only that it ran
   steps <- list(gates = \() run_gates(oof), linear = \() run_cv(p, fit_linear, score_linear),
                 ch_fallback = \() run_cv(p, \(d) fit_model(d, inputs = INPUTS_CH),
                                          \(m, d) score_both_sides(m, d, INPUTS_CH)),
@@ -33,7 +36,7 @@ if (mode == "dry") {
   quit(save = "no")
 }
 
-# ---- The shot ---------------------------------------------------------------
+# ---- Gates ----
 oof <- run_cv(p);  g <- run_gates(oof);  inputs <- INPUTS
 saveRDS(oof, file.path(out, "oof.rds")); saveRDS(g, file.path(out, "gates.rds"))
 cat("\n=== GATES ===\n"); print(g$pass)
@@ -41,7 +44,7 @@ cat("gate 1:\n"); print(round(g$gate1, 4)); cat("gate 2:\n"); print(g$gate2)
 cat("gate 3:\n"); print(round(g$gate3, 4)); print(g$gate3_types)
 cat("gate 4:\n"); print(g$gate4 |> select(player_name, pitch_type, game_year, list, pct, hit))
 
-# 7a, amendment 6: only if gate 3 fails with CH among the misses. One try
+# Changeup fallback: only if gate 3 fails with CH among the misses
 ch_miss <- any(g$gate3_types$pitch_type == "CH" & g$gate3_types$r <= 0)
 if (!g$pass["gate3"] && ch_miss) {
   inputs <- INPUTS_CH
@@ -51,7 +54,8 @@ if (!g$pass["gate3"] && ch_miss) {
 }
 cat("\nVERDICT:", if (all(g$pass)) "PASS" else "FAIL", "\n"); gc()
 
-# Reported, after the verdict. Depth 6 can only veto
+# ---- Reported after the verdict ----
+# Depth 6 can only veto
 g6 <- run_gates(run_cv(p, \(d) fit_model(d, depth = 6, inputs = inputs), \(m, d) score_both_sides(m, d, inputs))); gc()
 cat("depth 6:", if (identical(g6$pass, g$pass)) "RESOLVED" else "UNRESOLVED", "\n"); print(g6$pass)
 lin <- run_gates(run_cv(p, fit_linear, score_linear)); gc()

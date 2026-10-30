@@ -1,3 +1,6 @@
+# cv.R
+# Model-ready pitches and the out-of-fold loop.
+
 library(tidyverse)
 source("R/features.R")
 source("R/target.R")
@@ -6,8 +9,7 @@ source("R/model.R")
 KEEP <- c("pitcher", "player_name", "game_year", "game_date", "pitch_type", "p_throws", "stand",
           "balls", "strikes", "outcome", "fold", "zone", "description", INPUTS, "ivb_gap", "hb_gap", "release_spin_rate", "axis_diff")
 
-# Clean pitches to model-ready rows. Every step is pitch-level or uses the
-# pitcher's own season, so nothing here needs a fold
+# Pitch-level or pitcher-season steps; none needs a fold
 prep_pitches <- function(path = "data/pitches_clean.rds") {
   p <- readRDS(path) |>
     add_shape() |>
@@ -19,11 +21,7 @@ prep_pitches <- function(path = "data/pitches_clean.rds") {
     select(all_of(KEEP), delta_run_exp)
 }
 
-# Train on four folds, score the fifth, five times. The run-value table is
-# rebuilt from training pitchers inside the loop, and the held-out pitches are
-# valued with THAT table, so neither the model nor the answer key ever saw them
-# `fit` and `score` default to the pre-registered model; the linear baseline
-# and the depth-6 check pass their own, so all three share one fold loop
+# Train on four folds, score the fifth. The run-value table is rebuilt inside the loop.
 run_cv <- function(p, fit = fit_model, score = score_both_sides) {
   map(1:5, function(k) {
     train <- p |> filter(fold != k)

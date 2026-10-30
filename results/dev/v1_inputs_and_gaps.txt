@@ -1,0 +1,32 @@
+
+== v1 ==
+dev 2022-25 within-type r, whiff/swing: 0.282  rv on swings: 0.213 
+2025, same 977 pitches: ours 0.234  FanGraphs 0.512  gap -0.277 
+predictive edge (reported only): -0.016 
+# A tibble: 8 × 3
+  pitch_type r_whiff  rows
+  <chr>        <dbl> <int>
+1 CH          0.276    401
+2 CU          0.373    262
+3 FC          0.294    318
+4 FF          0.405   1265
+5 FS          0.0300   105
+6 SI          0.289    650
+7 SL          0.193    659
+8 ST          0.107    262
+
+== ch_gaps ==
+dev 2022-25 within-type r, whiff/swing: 0.274  rv on swings: 0.204 
+2025, same 977 pitches: ours 0.22  FanGraphs 0.512  gap -0.292 
+predictive edge (reported only): -0.017 
+# A tibble: 8 × 3
+  pitch_type r_whiff  rows
+  <chr>        <dbl> <int>
+1 CH          0.237    401
+2 CU          0.362    262
+3 FC          0.286    318
+4 FF          0.424   1265
+5 FS          0.0111   105
+6 SI          0.267    650
+7 SL          0.189    659
+8 ST          0.121    262

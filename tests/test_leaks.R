@@ -1,7 +1,9 @@
+# test_leaks.R
+# Pitcher folds and the run-value table leak nothing. Each check stops the script on failure.
+
 library(tidyverse)
 source("R/target.R")
 
-# Each check stops the script if the leak it targets is present
 p <- readRDS("data/pitches_clean.rds") |>
   mutate(outcome = outcome(events, description))
 message("Outcome mapped for ", round(100 * mean(!is.na(p$outcome)), 2), "% of pitches")
@@ -20,17 +22,16 @@ for (k in 1:5) {
   held  <- p |> filter(fold == k)
   tab   <- rv_table(train)
 
-  # 2. The training rows share no pitcher with the held-out fold
+  # 2. Training rows share no pitcher with the held-out fold
   stopifnot(length(intersect(train$pitcher, held$pitcher)) == 0)
 
-  # 3. The held-out pitchers would have moved the table. If they would not,
-  #    check 2 proves nothing about this table
+  # 3. Held-out pitchers would move the table
   leaky <- rv_table(p)
   moved <- tab |> inner_join(leaky, by = c("outcome", "balls", "strikes")) |>
     summarise(max_move = max(abs(rv.x - rv.y))) |> pull(max_move)
   stopifnot(moved > 0)
 
-  # 4. Every held-out pitch finds a value, so none is silently dropped
+  # 4. Every held-out pitch finds a value
   stopifnot(!anyNA(left_join(held, tab, by = c("outcome", "balls", "strikes"))$rv))
   message("fold ", k, ": no shared pitchers, table moves up to ",
           signif(moved, 2), " runs without them, every pitch valued")

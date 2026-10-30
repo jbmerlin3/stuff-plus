@@ -1,0 +1,16 @@
+
+== whiff_axis ==
+dev 2022-25 within-type r, whiff/swing: 0.465  rv on swings: 0.22 
+2025, same 977 pitches: ours 0.45  FanGraphs 0.512  gap -0.061 
+predictive edge (reported only): -0.086 
+# A tibble: 8 × 3
+  pitch_type r_whiff  rows
+  <chr>        <dbl> <int>
+1 CH           0.375   401
+2 CU           0.365   262
+3 FC           0.598   318
+4 FF           0.531  1265
+5 FS           0.415   105
+6 SI           0.524   650
+7 SL           0.470   659
+8 ST           0.241   262

@@ -1,0 +1,147 @@
+fold 1 fit on 2,261,133 pitches
+fold 2 fit on 2,292,896 pitches
+fold 3 fit on 2,293,577 pitches
+fold 4 fit on 2,245,153 pitches
+fold 5 fit on 2,205,189 pitches
+
+=== GATES ===
+gate1 gate2 gate3 gate4 
+FALSE FALSE  TRUE  TRUE 
+gate 1:
+estimate       lo       hi 
+ -0.0160  -0.0628   0.0325 
+gate 2:
+# A tibble: 3 × 3
+  family      edge pairs
+  <chr>      <dbl> <int>
+1 fastball  0.0110  1817
+2 breaking  0.0211  1155
+3 offspeed -0.178    512
+gate 3:
+estimate       lo       hi 
+  0.1546   0.1160   0.1938 
+# A tibble: 6 × 3
+  pitch_type      r pairs
+  <chr>       <dbl> <int>
+1 FF         0.209    990
+2 SI         0.0912   551
+3 SL         0.183    558
+4 CH         0.112    417
+5 CU         0.168    257
+6 ST         0.0580   244
+gate 4:
+# A tibble: 19 × 6
+   player_name        pitch_type game_year list     pct hit  
+   <chr>              <chr>          <dbl> <chr>  <dbl> <lgl>
+ 1 Strider, Spencer   FF              2023 elite 0.994  TRUE 
+ 2 Miller, Mason      FF              2024 elite 0.987  TRUE 
+ 3 Misiorowski, Jacob FF              2025 elite 0.955  TRUE 
+ 4 Holmes, Clay       SI              2022 elite 0.994  TRUE 
+ 5 Clase, Emmanuel    FC              2024 elite 0.976  TRUE 
+ 6 Strider, Spencer   SL              2023 elite 0.629  FALSE
+ 7 Miller, Mason      SL              2024 elite 0.904  TRUE 
+ 8 Ohtani, Shohei     ST              2023 elite 1      TRUE 
+ 9 Glasnow, Tyler     CU              2024 elite 0.806  TRUE 
+10 Snell, Blake       CU              2023 elite 0.731  FALSE
+11 Williams, Devin    CH              2023 elite 0.898  TRUE 
+12 Skubal, Tarik      CH              2024 elite 0.891  TRUE 
+13 Skenes, Paul       FS              2024 elite 0.909  TRUE 
+14 Senga, Kodai       FO              2023 elite 0.435  FALSE
+15 Duran, Jhoan       FS              2024 elite 0.818  TRUE 
+16 Hendricks, Kyle    SI              2024 weak  0.0124 TRUE 
+17 Greinke, Zack      FF              2023 weak  0.0225 TRUE 
+18 Corbin, Patrick    SI              2023 weak  0.297  FALSE
+19 Miley, Wade        FF              2023 weak  0.164  TRUE 
+
+VERDICT: FAIL 
+            used  (Mb) gc trigger   (Mb) limit (Mb)  max used   (Mb)
+Ncells   2500511 133.6    7717421  412.2         NA   7717421  412.2
+Vcells 125087969 954.4  311022401 2373.0      16384 311022376 2373.0
+fold 1 fit on 2,261,133 pitches
+fold 2 fit on 2,292,896 pitches
+fold 3 fit on 2,293,577 pitches
+fold 4 fit on 2,245,153 pitches
+fold 5 fit on 2,205,189 pitches
+            used  (Mb) gc trigger   (Mb) limit (Mb)  max used   (Mb)
+Ncells   2500682 133.6    7717421  412.2         NA   7717421  412.2
+Vcells 125088840 954.4  373306881 2848.2      16384 372979216 2845.7
+depth 6: RESOLVED 
+gate1 gate2 gate3 gate4 
+FALSE FALSE  TRUE  TRUE 
+fold 1 fit on 2,261,133 pitches
+fold 2 fit on 2,292,896 pitches
+fold 3 fit on 2,293,577 pitches
+fold 4 fit on 2,245,153 pitches
+fold 5 fit on 2,205,189 pitches
+            used  (Mb) gc trigger   (Mb) limit (Mb)  max used   (Mb)
+Ncells   2509826 134.1    7717421  412.2         NA   7717421  412.2
+Vcells 125110203 954.6  375341395 2863.7      16384 375341395 2863.7
+linear baseline, gate 1 and gate 3:
+      estimate      lo      hi
+gate1  -0.1037 -0.1532 -0.0526
+gate3   0.0865  0.0515  0.1236
+            used   (Mb) gc trigger   (Mb) limit (Mb)  max used   (Mb)
+Ncells   2541281  135.8    7717421  412.2         NA   7717421  412.2
+Vcells 187325669 1429.2  375341395 2863.7      16384 375341395 2863.7
+# A tibble: 4 × 3
+  pitches     r cases
+    <dbl> <dbl> <int>
+1      25 0.961  9533
+2      50 0.980  7457
+3     100 0.989  4907
+4     200 0.994  2173
+# A tibble: 11 × 3
+   pitch_type r_grade_zone cases
+   <chr>             <dbl> <int>
+ 1 FF               0.0750  1967
+ 2 SI               0.0575  1156
+ 3 SV               0.127     33
+ 4 SL               0.0259  1245
+ 5 CH               0.0585   910
+ 6 FS               0.0411   210
+ 7 CU              -0.0862   585
+ 8 KC              -0.238    158
+ 9 FC               0.0849   634
+10 ST               0.0367   555
+11 FO               0.967      4
+# A tibble: 11 × 5
+   pitch_type mean_pred same_minus_opp pitches stuff_plus
+   <chr>          <dbl>          <dbl>   <int>      <dbl>
+ 1 SI         -0.000377       0.00526   440266       99.4
+ 2 ST          0.000981       0.00403   180376      103. 
+ 3 FC         -0.000126       0.00353   220864      100.0
+ 4 SL          0.000792       0.00281   434435      102. 
+ 5 SV         -0.00113        0.00253    13594       97.6
+ 6 FF         -0.000604       0.00213   914100       98.9
+ 7 CH         -0.00123        0.00192   301241       97.4
+ 8 FS         -0.000761       0.00186    72789       98.5
+ 9 FO         -0.000321       0.000209    1662       99.5
+10 CU         -0.00225       -0.000850  189664       95.0
+11 KC          0.000132      -0.000867   55496      101. 
+         Feature       Gain      Cover  Frequency
+          <char>      <num>      <num>      <num>
+1:           ivb 0.23078284 0.20241531 0.19404008
+2:            hb 0.18142586 0.19775712 0.17006337
+3: release_speed 0.17987317 0.17741091 0.15944511
+4:      velo_gap 0.13634660 0.15768531 0.15601987
+5:    release_ht 0.13238202 0.11012137 0.16013016
+6:  release_side 0.09526358 0.13078329 0.13512588
+7:     same_side 0.04392593 0.02382669 0.02517554
+[[1]]
+release_speed           ivb            hb    release_ht  release_side 
+ 8.299507e-03  7.806948e-03 -4.405593e-03  3.614095e-05  7.483338e-04 
+     velo_gap     same_side   (Intercept) 
+-2.241664e-03 -8.389412e-05 -7.259430e-05 
+
+[[2]]
+release_speed           ivb            hb    release_ht  release_side 
+-5.551690e-03 -1.655898e-04  9.356372e-03 -5.531135e-05 -1.989808e-05 
+     velo_gap     same_side   (Intercept) 
+ 4.269541e-03  4.032825e-04 -7.259430e-05 
+
+[[3]]
+release_speed           ivb            hb    release_ht  release_side 
+-0.0057390750  0.0045481568  0.0063360476 -0.0008860891  0.0001714343 
+     velo_gap     same_side   (Intercept) 
+ 0.0035114085  0.0002105205 -0.0000725943 
+

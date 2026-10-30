@@ -1,8 +1,11 @@
+# clean_pitches.R
+# Raw Statcast pitches to the model's cleaned file.
+#   Rscript scripts/clean_pitches.R                       2022-2025 development data
+#   Rscript scripts/clean_pitches.R <in> <out> <season>   a holdout season, same filters
+
 library(tidyverse)
 
-# ---- Constants ---------------------------------------------------------------
-# Validation holds out pitchers, not a season (PREREG.md section 6), so all four
-# complete seasons are cleaned together. 2026 stays out until v1 is judged
+# ---- Constants ----
 SEASONS <- 2022:2025
 
 KEEP_COLS <- c(
@@ -12,7 +15,7 @@ KEEP_COLS <- c(
   "pitch_type", "release_speed", "release_spin_rate", "release_extension",
   "release_pos_x", "release_pos_z", "pfx_x", "pfx_z", "arm_angle", "spin_axis",
   "vx0", "vy0", "vz0", "ax", "ay", "az", "plate_z",
-  "zone"   # for the reported location check (amendment 5), never a model input
+  "zone"   # for a reported location check, never a model input
 )
 
 NUMERIC_TYPES <- c("game_year", "game_pk", "at_bat_number", "pitch_number", "balls",
@@ -24,17 +27,12 @@ NUMERIC_TYPES <- c("game_year", "game_pk", "at_bat_number", "pitch_number", "bal
 DROP_DESC <- c("automatic_ball", "automatic_strike", "pitchout",
                "foul_bunt", "missed_bunt", "bunt_foul_tip")
 
-# FO added 2026-10-19: Senga's ghost fork is tagged FO, and leaving it out
-# silently dropped every forkball
 VALID_TYPES <- c("FF", "SI", "FC", "SL", "ST", "CU", "KC", "CH", "FS", "SV", "FO")
 
-# Only the columns the model will use. A row missing spin_axis shouldn't be
-# dropped if spin_axis never becomes a feature
-# Spin is not an input (DECISIONS.md), so a pitch missing spin is kept
+# A pitch missing a column the model doesn't use is kept
 MODEL_INPUTS <- c("release_speed", "release_pos_x", "release_pos_z", "pfx_x", "pfx_z")
 
-# Real soft-tossers who fall under the 80 mph screen, checked by hand Sept 2026.
-# Revisit whenever a season is added
+# Real soft-tossers under the 80 mph screen, checked by hand
 REAL_PITCHERS <- c(
   448179L,  # Hill, Rich
   643511L,  # Rogers, Tyler
@@ -44,31 +42,25 @@ REAL_PITCHERS <- c(
   592222L,  # Claudio, Alex
   491624L,  # Valdez, César
   572383L,  # Moran, Brian
-  676680L   # Cosgrove, Tom: sweeper-heavy LHP, 78.5 mph average in 2026 (added 2026-10-20)
+  676680L   # Cosgrove, Tom
 )
 
-# ---- Functions ---------------------------------------------------------------
-
-# Returns the data unchanged so it can sit anywhere in a pipe
+# ---- Functions ----
 log_step <- function(df, label) {
   message(label, ": ", format(nrow(df), big.mark = ","), " rows")
   df
 }
 
-# The raw frame lives only inside this function, so its 3.8 GB is freed on return
 load_pitches <- function(path) {
   readRDS(path) |>
     select(all_of(KEEP_COLS)) |>
     filter(game_year %in% SEASONS) |>
-    # Integer IDs so joins to FanGraphs xMLBAMID work later
     mutate(pitcher = as.integer(pitcher)) |>
-    # One type per column whatever the source. The 2022-2025 cache stores balls,
-    # strikes and zone as text and the 2026 store as numbers; joins between them
-    # failed in the v2 exam dry run (2026-10-20)
+    # The 2022-2025 and 2026 sources store balls, strikes and zone as different types
     mutate(across(any_of(NUMERIC_TYPES), as.numeric), game_date = as.Date(game_date))
 }
 
-# Computed before any pitch-type filtering, because FA and EP tags are the evidence
+# Before any pitch-type filter, because FA and EP tags are the evidence
 flag_position_players <- function(df) {
   df |>
     group_by(pitcher, player_name, game_year) |>
@@ -87,31 +79,28 @@ clean_pitches <- function(df, flagged) {
     log_step("after position players") |>
     filter(!description %in% DROP_DESC) |>
     log_step("after description filter") |>
-    # %in% returns FALSE for NA, so untagged pitches drop here too
     filter(pitch_type %in% VALID_TYPES) |>
     log_step("after pitch type filter") |>
     drop_na(all_of(MODEL_INPUTS)) |>
     log_step("after missing features") |>
-    # No run value means no target; a 4-ball or 3-strike count is a data error
     filter(!is.na(delta_run_exp), balls < 4, strikes < 3) |>
     log_step("after target and count checks")
 }
 
-# One row per pitch, or the script stops
 check_unique <- function(df) {
   n_unique <- df |> distinct(game_pk, at_bat_number, pitch_number) |> nrow()
   stopifnot(n_unique == nrow(df))
   message("No duplicate pitches")
 }
 
-# ---- Run ---------------------------------------------------------------------
-# Rscript 02_clean.R                       -> 2022-2025 development data
-# Rscript 02_clean.R <in> <out> <season>   -> a holdout season, same filters
+# ---- Run ----
 args <- commandArgs(trailingOnly = TRUE)
 in_path  <- if (length(args) >= 1) args[1] else "data/pitches_all_master.rds"
 out_path <- if (length(args) >= 2) args[2] else "data/pitches_clean.rds"
 if (length(args) >= 3) SEASONS <- as.integer(args[3])
-flag_path <- sub("\\.rds$", "_position_players.csv", sub("^data/", "outputs/", out_path))
+flag_path <- file.path("outputs", paste0(sub("\\.rds$", "", basename(out_path)), "_position_players.csv"))
+dir.create("outputs", showWarnings = FALSE)
+dir.create(dirname(out_path), recursive = TRUE, showWarnings = FALSE)
 
 all_pitches <- load_pitches(in_path)
 gc()
@@ -119,7 +108,7 @@ stopifnot(!anyNA(all_pitches$pitcher))
 
 flagged <- flag_position_players(all_pitches)
 message("Flagged pitcher-seasons: ", nrow(flagged))
-write_csv(flagged, if (length(args)) flag_path else "outputs/position_players_excluded.csv")
+write_csv(flagged, flag_path)
 
 pitches_clean <- clean_pitches(all_pitches, flagged)
 check_unique(pitches_clean)

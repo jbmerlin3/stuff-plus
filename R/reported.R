@@ -1,13 +1,14 @@
+# reported.R
+# Checks reported beside the v1 and v2 results. None of them decides a verdict.
+
 library(tidyverse)
 
-# Reported, never gated (PREREG.md section 10, amendment 5)
-
-# 1. Linear baseline: velo, IVB and HB in a straight line, same folds and target
+# ---- Linear baseline ----
 fit_linear   <- function(train) lm(rv ~ release_speed + ivb + hb, data = train)
 score_linear <- function(model, df) df |> mutate(pred = predict(model, df))
 
-# 2. Stabilization: split each pitch's pitches into two random halves of n and
-#    correlate the halves' grades. High r at small n = trust it early
+# ---- Stabilization ----
+# Two random halves of n pitches; a high r at small n means the grade settles early
 split_half <- function(oof, sizes = c(25, 50, 100, 200)) {
   set.seed(3)
   map(sizes, function(n) {
@@ -19,8 +20,8 @@ split_half <- function(oof, sizes = c(25, 50, 100, 200)) {
   }) |> list_rbind()
 }
 
-# 3. Location: how strongly a grade tracks zone rate within each pitch type.
-#    Strong = the target let location leak into "shape"
+# ---- Location ----
+# A strong grade-to-zone-rate link would mean location leaked into "shape"
 location_check <- function(oof) {
   oof |> summarise(n = n(), grade = mean(pred), zone_rate = mean(zone %in% 1:9),
                    .by = c(pitcher, game_year, pitch_type)) |>
@@ -28,15 +29,13 @@ location_check <- function(oof) {
     summarise(r_grade_zone = cor(grade, zone_rate), cases = n(), .by = pitch_type)
 }
 
-# 4. Shape of the scale and of the platoon split, by pitch type. same_minus_opp
-#    tests his prediction: largest for ST and SL, smallest for CU and FS
+# ---- Platoon split by pitch type ----
 by_type <- function(oof) {
   oof |> summarise(mean_pred = mean(pred), same_minus_opp = mean(pred_same - pred_opp),
                    pitches = n(), .by = pitch_type) |> arrange(-same_minus_opp)
 }
 
-# 5. Final model on all of 2022-2025, the 100-scale constants, and what drives
-#    grades. Built only after the gates are read
+# ---- v1 final fit and feature contributions ----
 final_fit <- function(p, inputs = INPUTS) {
   tab   <- rv_table(p)
   p     <- p |> left_join(tab, by = c("outcome", "balls", "strikes"))
@@ -48,7 +47,6 @@ final_fit <- function(p, inputs = INPUTS) {
        importance = xgb.importance(model = model))
 }
 
-# Feature contributions for one pitch: which inputs pushed its grade up or down
 explain_pitch <- function(model, p, who, type, year, inputs = INPUTS) {
   d <- p |> filter(player_name == who, pitch_type == type, game_year == year)
   contrib <- predict(model, xgb.DMatrix(to_matrix(d, inputs)), predcontrib = TRUE)

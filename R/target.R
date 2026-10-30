@@ -1,3 +1,6 @@
+# target.R
+# Pitch outcomes, swing and whiff definitions, the v1 run-value table, and pitcher folds.
+
 library(tidyverse)
 
 OUT_EVENTS  <- c("field_out", "force_out", "grounded_into_double_play",
@@ -5,12 +8,11 @@ OUT_EVENTS  <- c("field_out", "force_out", "grounded_into_double_play",
                  "fielders_choice_out", "sac_fly", "sac_fly_double_play",
                  "field_error")   # an error is contact a fielder should turn into an out
 DROP_EVENTS <- c("sac_bunt", "catcher_interf", "truncated_pa")
+SWING_DESC  <- c("swinging_strike", "swinging_strike_blocked", "foul_tip", "foul", "hit_into_play")
 WHIFF_DESC  <- c("swinging_strike", "swinging_strike_blocked", "foul_tip")
 BALL_DESC   <- c("ball", "blocked_ball")
 
-# What the pitch did. Terminal events first: a whiff on strike three is a
-# strikeout, worth more than strike one. NA means "not a pitch outcome" and the
-# row is dropped
+# Terminal events first: a whiff on strike three is a strikeout. NA drops the row.
 outcome <- function(events, description) {
   case_when(
     events %in% DROP_EVENTS                                ~ NA_character_,
@@ -26,9 +28,8 @@ outcome <- function(events, description) {
   )
 }
 
-# League value of each outcome in each count, from TRAINING pitchers only.
-# Thin cells (under 50) fall back to the outcome's value across all counts.
-# Sign flipped so a good pitch for the pitcher is positive
+# League value of each outcome in each count, from training pitchers only.
+# Cells under min_cell fall back to the outcome's overall value. Higher is better for the pitcher.
 rv_table <- function(train, min_cell = 50) {
   by_outcome <- train |> summarise(rv_all = mean(delta_run_exp), .by = outcome)
   train |>

@@ -1,0 +1,8 @@
+Flagged pitcher-seasons: 245
+start: 2,853,422 rows
+after position players: 2,846,128 rows
+after description filter: 2,831,218 rows
+after pitch type filter: 2,828,072 rows
+after missing features: 2,827,886 rows
+after target and count checks: 2,827,868 rows
+No duplicate pitches
